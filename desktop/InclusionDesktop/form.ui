@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>370</width>
+    <height>250</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>User login</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../media/images/ProyectoIcon.png</normaloff>../../media/images/ProyectoIcon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#Form{
+  background:rgb(231, 232, 255);
+}</string>
+  </property>
+  <widget class="QPushButton" name="loginButton">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>200</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+  background-color:rgb(0,163,204);
+color:white;
+border-radius:2px;
+}
+QPushButton:hover{
+  background-color:rgb(0,163,204,70%);
+}</string>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="registerButton">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>200</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+  background-color:rgb(0,163,204);
+color:white;
+border-radius:2px;
+}
+QPushButton:hover{
+  background-color:rgb(0,163,204,70%);
+}</string>
+   </property>
+   <property name="text">
+    <string>Registrar</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="userName">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>110</y>
+     <width>241</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit{
+  border:1px solid rgb(219, 211, 222);
+  border-radius:2px;
+}
+QLineEdit:focus{
+  border:1px solid rgb(78, 125, 255);
+  border-radius:2px;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Enter your Name</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="userPassword">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>150</y>
+     <width>241</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit{
+  border:1px solid rgb(219, 211, 222);
+  border-radius:2px;
+}
+QLineEdit:focus{
+  border:1px solid rgb(78, 125, 255);
+  border-radius:2px;
+}</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Enter your Password</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>371</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../../media/images/LogoProyecto.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>loginButton</zorder>
+  <zorder>registerButton</zorder>
+  <zorder>userName</zorder>
+  <zorder>userPassword</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
