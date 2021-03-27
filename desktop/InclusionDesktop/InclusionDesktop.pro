@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     form.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qnchatmessage.cpp
 
 HEADERS += \
     form.h \
-    mainwindow.h
+    mainwindow.h \
+    qnchatmessage.h
 
 FORMS += \
     form.ui \
