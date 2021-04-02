@@ -102,7 +102,6 @@ QLineEdit:focus{
   <zorder>label</zorder>
   <zorder>userName</zorder>
   <zorder>loginButton</zorder>
-  <zorder>horizontalSpacer</zorder>
  </widget>
  <resources/>
  <connections/>
