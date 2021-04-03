@@ -7,5 +7,8 @@ assignees: ''
 
 ---
 
-# Descripción
+## Descripción
 ** Describe aquí tu mejora **
+
+## Objetivos
+- [ ] *Coloca aquí los pasos u objetivos para completar esta mejora*
