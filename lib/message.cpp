@@ -1,18 +1,16 @@
-#include "message.h"
+#include "Message.h"
 
 using namespace std;
 
-message::message( char m)
+Message::Message( int group, string message, string user )
 {
-  messages = m;
-
+  this->date = std::chrono::system_clock::now();
+  this->groupID = group;
+  this->message = message;
+  this->userID = user;
 }
 
-void message:: setMessage(char m){
-    messages = m;
+void Message::setMessage( string message )
+{
+  this->message = message;
 }
-
-char message:: getMessage(){
-     return messages;
-}
-
