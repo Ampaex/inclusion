@@ -586,8 +586,20 @@
        <pointsize>11</pointsize>
       </font>
      </property>
+     <property name="locale">
+      <locale language="Spanish" country="Spain"/>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Fixed</enum>
+     </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -622,29 +634,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QListWidget" name="listWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>261</width>
-       <height>471</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>261</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Lista de usuarios</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
@@ -670,6 +659,9 @@
        <height>91</height>
       </rect>
      </property>
+     <property name="locale">
+      <locale language="Spanish" country="Spain"/>
+     </property>
     </widget>
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
@@ -679,6 +671,9 @@
        <width>61</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="locale">
+      <locale language="Spanish" country="Spain"/>
      </property>
      <property name="text">
       <string>Enviar</string>
@@ -706,7 +701,7 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="label_userName">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -714,6 +709,9 @@
        <width>81</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="locale">
+      <locale language="Spanish" country="Spain"/>
      </property>
      <property name="text">
       <string>UserName</string>
@@ -728,22 +726,100 @@
        <height>23</height>
       </rect>
      </property>
+     <property name="locale">
+      <locale language="Spanish" country="Spain"/>
+     </property>
      <property name="text">
       <string>Borrar</string>
      </property>
     </widget>
     <zorder>textEdit</zorder>
     <zorder>label</zorder>
-    <zorder>label_2</zorder>
+    <zorder>label_userName</zorder>
     <zorder>pushButton</zorder>
     <zorder>clearButton</zorder>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>0</y>
+      <width>281</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="locale">
+     <locale language="Spanish" country="Spain"/>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab_1">
+     <attribute name="title">
+      <string>Usuarios</string>
+     </attribute>
+     <widget class="QListWidget" name="listWidget_1">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>271</width>
+        <height>461</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="Spanish" country="Spain"/>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="selectionRectVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Grupos</string>
+     </attribute>
+     <widget class="QListWidget" name="listWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>271</width>
+        <height>461</height>
+       </rect>
+      </property>
+      <property name="locale">
+       <locale language="Spanish" country="Spain"/>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="selectionRectVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>listWidget</tabstop>
-  <tabstop>listWidget_2</tabstop>
   <tabstop>textEdit</tabstop>
   <tabstop>pushButton</tabstop>
  </tabstops>

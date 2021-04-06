@@ -50,6 +50,9 @@ QPushButton:hover{
   background-color:rgb(0,163,204,70%);
 }</string>
    </property>
+   <property name="locale">
+    <locale language="Spanish" country="Spain"/>
+   </property>
    <property name="text">
     <string>Login</string>
    </property>
@@ -89,7 +92,7 @@ QLineEdit:focus{
     <number>16</number>
    </property>
    <property name="placeholderText">
-    <string>Enter your Name</string>
+    <string>Escribe su nombre</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -100,6 +103,9 @@ QLineEdit:focus{
      <width>351</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhNone</set>
    </property>
    <property name="text">
     <string/>
@@ -140,17 +146,17 @@ QLineEdit:focus{
    </property>
    <item>
     <property name="text">
-     <string>Spain</string>
+     <string>Español</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>English</string>
+     <string>Inglés</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Chinese</string>
+     <string>Chino</string>
     </property>
    </item>
   </widget>
