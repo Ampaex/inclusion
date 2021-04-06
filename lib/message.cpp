@@ -1,7 +1,9 @@
-#include "Message.h"
+#include "message.h"
 #include <iostream>
 
 using namespace std;
+
+// Constructor
 
 Message::Message( int group, string message, string user )
 {
@@ -11,6 +13,8 @@ Message::Message( int group, string message, string user )
   this->userID = user;
 }
 
+// Setters
+
 void Message::setMessage( string message )
 {
   this->message = message;
@@ -18,10 +22,10 @@ void Message::setMessage( string message )
 
 // Sample:
 
-// int main( int argc, char *argv[], char *envp[] )
-// {
-//     Message m = Message(1,"Hola","Juan");
-//     cout << m.getMessage() << endl;
-//     cout << m.getEpoch();
+int main( int argc, char *argv[], char *envp[] )
+{
+    Message m = Message(1,"Hola","Juan");
+    cout << m.getMessage() << endl;
+    cout << m.getEpoch();
 
-// }
+}
