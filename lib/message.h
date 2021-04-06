@@ -1,7 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <chrono> // https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
+#include <chrono>
 #include <ctime> 
 #include <string>
 
@@ -10,24 +10,24 @@ class Message
     private:
 
         // Attributes
-        auto date;
+        time_t epoch;
         int groupID;
-        string message;
-        string userID;
+        std::string message;
+        std::string userID;
 
     public:
 
         // Constructor
-        Message( int group, string message, string user );
+        Message( int group, std::string message, std::string user );
 
         // Getters
-        string getDate() { return date; }
-        string getGroup() { return groupID; }
-        string getMessage() { return message; }
-        string getUser() { return userID; }
+        time_t getEpoch() { return epoch; }
+        int getGroup() { return groupID; }
+        std::string getMessage() { return message; }
+        std::string getUser() { return userID; }
 
         // Setters
-        void setMessage( string message );
+        void setMessage( std::string message );
 
         // Methods
 
