@@ -54,7 +54,7 @@ QPushButton:hover{
     <locale language="Spanish" country="Spain"/>
    </property>
    <property name="text">
-    <string>Login</string>
+    <string>Entrar</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="userName">
@@ -89,10 +89,13 @@ QLineEdit:focus{
     <string/>
    </property>
    <property name="maxLength">
-    <number>16</number>
+    <number>9</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Normal</enum>
    </property>
    <property name="placeholderText">
-    <string>Escribe su nombre</string>
+    <string>Escriba su apodo</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">

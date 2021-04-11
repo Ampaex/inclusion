@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
+void MainWindow::setUsername(QString str){
+    ui->label_userName->setText(str);
+}
 MainWindow::~MainWindow()
 {
     delete ui;

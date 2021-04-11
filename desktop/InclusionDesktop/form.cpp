@@ -20,6 +20,12 @@ void Form::on_loginButton_clicked()
     if (!username.isEmpty())
     {
         this->hide();
+        mainwindow.setUsername(username);
         mainwindow.show();
     }
+}
+
+void Form::on_comboBox_activated(const QString &arg1)
+{
+
 }
