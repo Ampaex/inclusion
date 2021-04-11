@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    void setUsername(QString);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
