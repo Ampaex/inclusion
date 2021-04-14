@@ -20,6 +20,7 @@ void Form::on_loginButton_clicked()
     if (!username.isEmpty())
     {
         this->hide();
+        mainwindow.move(QApplication::desktop()->screen()->rect().center() - mainwindow.rect().center());
         mainwindow.setUsername(username);
         mainwindow.show();
     }
