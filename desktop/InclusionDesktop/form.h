@@ -2,6 +2,7 @@
 #define FORM_H
 
 #include <QWidget>
+#include <QDesktopWidget>
 #include "mainwindow.h"
 
 namespace Ui {
@@ -19,7 +20,6 @@ public:
 
 private slots:
     void on_loginButton_clicked();
-
     void on_comboBox_activated(const QString &arg1);
 
 private:
