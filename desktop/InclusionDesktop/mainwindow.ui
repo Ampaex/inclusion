@@ -550,7 +550,7 @@
      <pointsize>11</pointsize>
     </font>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="5,1">
     <property name="spacing">
      <number>2</number>
     </property>
@@ -568,12 +568,6 @@
     </property>
     <item>
      <widget class="QWidget" name="widget_2" native="true">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>500</height>
-       </size>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,2">
        <property name="leftMargin">
         <number>5</number>
@@ -715,12 +709,6 @@
     </item>
     <item>
      <widget class="QWidget" name="widget" native="true">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,7,1">
        <property name="leftMargin">
         <number>5</number>
