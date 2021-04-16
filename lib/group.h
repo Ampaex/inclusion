@@ -1,6 +1,7 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include "message.h"
 #include "user.h"
 #include <string>
 #include <vector>
@@ -13,6 +14,8 @@ class Group
         unsigned int groupID;
         std::string title;
         std::vector<User> users;
+        std::vector<Message> messages;
+        // Language vector: Every time a user is added, check if language exists
 
     public:
 
@@ -28,6 +31,7 @@ class Group
         void setTitle( std::string title );
 
         // Methods
+        void addMessage( Message message );
         bool addUser( User user );
         bool removeUser( User user );
 

@@ -12,8 +12,10 @@ class Message
         // Attributes
         time_t epoch;
         int groupID;
-        std::string message;
+        std::string languageID;
         std::string userID;
+        // TODO: Create language dict
+        // std::string message;
 
     public:
 
@@ -23,7 +25,7 @@ class Message
         // Getters
         time_t getEpoch() { return epoch; }
         int getGroup() { return groupID; }
-        std::string getMessage() { return message; }
+        std::string getText( std::string language ) { /*return message[language];*/ }
         std::string getUser() { return userID; }
 
         // Setters
