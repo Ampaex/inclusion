@@ -25,6 +25,12 @@ void Group::setTitle( string user )
 
 // Methods
 
+void Group::addMessage( Message message ) 
+{
+    // Add message to message list
+    this->messages.push_back(message);
+}
+
 bool Group::addUser( User user ) 
 {
     bool add = true;

@@ -16,6 +16,10 @@
 #include <fstream>
 using namespace std;
 
+// TODO: Group name list
+// TODO: Receive name and check if possible
+// TODO: Receive group message
+
 // Server side TCP socket
 int main(int argc, char *argv[])
 {
