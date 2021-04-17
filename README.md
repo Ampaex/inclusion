@@ -9,8 +9,7 @@ La aplicación inclusion pretende ser una aplicación de chat de escritorio la c
 <p align="center">
   <img width="671" height="672" src="Documentacion/Diagrama%20de%20flujo%20Cliente-Servidor.png">
 </p>
-![Imagen de flujo](Documentacion/Diagrama%20de%20flujo%20Cliente-Servidor.png)
 
-_Fecha de entrega 14 de mayo de 2021_
+_Fecha de entrega [14 de mayo de 2021]_
 
 _Autores: Liu Yfei, Jhohan Herrera, Ernesto Aranda, Antonio Vázquez._
