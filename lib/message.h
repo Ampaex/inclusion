@@ -3,7 +3,11 @@
 
 #include <chrono>
 #include <ctime> 
+#include <iostream>
+#include <map>
 #include <string>
+
+using namespace std;
 
 class Message
 {
@@ -12,27 +16,26 @@ class Message
         // Attributes
         time_t epoch;
         int groupID;
-        std::string languageID;
-        std::string userID;
-        // TODO: Create language dict
-        // std::string message;
+        string languageID;
+        string userID;
+        map<std::string, std::string> message;
 
     public:
 
         // Constructor
-        Message( int group, std::string message, std::string user );
+        Message( int group, string message, string language, string user );
 
         // Getters
         time_t getEpoch() { return epoch; }
         int getGroup() { return groupID; }
-        std::string getText( std::string language ) { /*return message[language];*/ }
-        std::string getUser() { return userID; }
+        string getLanguage() { return languageID; }
+        string getText( string language ) { return message[language]; }
+        string getUser() { return userID; }
 
         // Setters
-        void setMessage( std::string message );
+        void setMessage( string message ) { this->message[languageID] = message; };
 
         // Methods
-
-    };
+};
 
 #endif // MESSAGE_H

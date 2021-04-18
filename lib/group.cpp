@@ -1,22 +1,20 @@
 #include "group.h"
-#include <iostream>
 
 using namespace std;
 
+//////////////////////
+//      GROUP       //
+//////////////////////
+
 // Constructor
 
-Group::Group( unsigned int group, string title )
+Group::Group( string title, User user )
 {
-  this->groupID = group;
   this->title = title;
+  this->users.push_back(user);
 }
 
 // Setters
-
-void Group::setGroup( unsigned int group )
-{
-  this->groupID = group;
-}
 
 void Group::setTitle( string user )
 {
@@ -29,6 +27,11 @@ void Group::addMessage( Message message )
 {
     // Add message to message list
     this->messages.push_back(message);
+
+    // Remove first message if limit is surpassed
+    if (this->messages.size() > limit) {
+        this->messages.erase(this->messages.begin());
+    }
 }
 
 bool Group::addUser( User user ) 
@@ -39,7 +42,7 @@ bool Group::addUser( User user )
     for (int i = 0; i < this->users.size(); i++) {
 
         // If the current user exists, do not add it
-        if (this->users[i].getUser() == user.getUser()) {
+        if (this->users[i].getName() == user.getName()) {
             add = false;
             break;
         }
@@ -61,7 +64,7 @@ bool Group::removeUser( User user )
 
         // If the current user has the same name as 
         // the user to remove, delete it
-        if (this->users[i].getUser() == user.getUser()) {
+        if (this->users[i].getName() == user.getName()) {
             remove = true;
             this->users.erase(this->users.begin() + i);
             break;
@@ -72,11 +75,12 @@ bool Group::removeUser( User user )
     return remove;
 }
 
-// Sample:
+//////////////////////
+//      MAIN        //
+//////////////////////
 
-int main( int argc, char *argv[], char *envp[] )
-{
-    Group g = Group(0,"Informática");
-    cout << g.getGroup() << endl;
-    cout << g.getTitle() << endl;
-}
+// int main( int argc, char *argv[], char *envp[] )
+// {
+//     Group g = Group("Informática");
+//     cout << g.getTitle() << endl;
+// }

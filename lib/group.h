@@ -3,38 +3,39 @@
 
 #include "message.h"
 #include "user.h"
+#include <iostream>
 #include <string>
 #include <vector>
+
+const int limit = 100;
+using namespace std;
 
 class Group
 {
     private:
 
         // Attributes
-        unsigned int groupID;
-        std::string title;
-        std::vector<User> users;
-        std::vector<Message> messages;
-        // Language vector: Every time a user is added, check if language exists
+        vector<Message> messages;
+        string title;
+        vector<User> users;
 
     public:
 
         // Constructor
-        Group( unsigned int group, std::string title );
+        Group( string title, User user );
 
         // Getters
-        unsigned int getGroup() { return groupID; }
-        std::string getTitle() { return title; }
+        vector<Message> getMessages() { return messages; }
+        string getTitle() { return title; }
+        vector<User> getUsers() { return users; }
 
         // Setters
-        void setGroup( unsigned int group );
-        void setTitle( std::string title );
+        void setTitle( string title );
 
         // Methods
         void addMessage( Message message );
         bool addUser( User user );
         bool removeUser( User user );
-
-    };
+};
 
 #endif // GROUP_H

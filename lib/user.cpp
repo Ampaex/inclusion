@@ -1,7 +1,8 @@
 #include "user.h"
-#include <iostream>
 
-using namespace std;
+/////////////////////
+//      USER       //
+/////////////////////
 
 // Constructor
 
@@ -23,12 +24,13 @@ void User::setUser( string user )
   this->userID = user;
 }
 
-// Sample:
+//////////////////////
+//      MAIN        //
+//////////////////////
 
-int main( int argc, char *argv[], char *envp[] )
-{
-    User u = User("ES","Juan");
-    cout << u.getUser() << endl;
-    cout << u.getLanguage();
-
-}
+// int main( int argc, char *argv[], char *envp[] )
+// {
+//     User u = User("ES","Juan");
+//     cout << u.getName() << endl;
+//     cout << u.getLanguage();
+// }
