@@ -6,22 +6,22 @@
 
 // Constructor
 
-User::User( string language, string user )
+User::User( string language, string name )
 {
-  this->languageID = language;
-  this->userID = user;
+  this->language = language;
+  this->name = name;
 }
 
 // Setters
 
 void User::setLanguage( string language )
 {
-  this->languageID = language;
+  this->language = language;
 }
 
-void User::setUser( string user )
+void User::setName( string name )
 {
-  this->userID = user;
+  this->name = name;
 }
 
 //////////////////////

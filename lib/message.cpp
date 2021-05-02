@@ -6,13 +6,12 @@
 
 // Constructor
 
-Message::Message( int group, string message, string language, string user )
+Message::Message( string message, string language, User user )
 {
   this->epoch = time(nullptr);
-  this->groupID = group;
-  this->languageID = language;
+  this->language = language;
   this->message[language] = message;
-  this->userID = user;
+  this->user = user;
 }
 
 //////////////////////

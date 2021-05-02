@@ -42,6 +42,7 @@ class Server
         // Getters
         vector<string> getTitles() { return titles; }
         Group getGroup( string title );
+        vector<Group> getGroups() { return groups; }
         vector<User> getUsers() { return users; }
 
         // Methods
@@ -49,6 +50,7 @@ class Server
         bool addMessage( Message message, Group group );
         bool addUser( User user );
         bool addUserToGroup( User user, Group group );
+        bool inGroup( string title, User user );
         bool removeGroup( Group group );
         bool removeUser( User user );
 };

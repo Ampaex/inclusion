@@ -107,6 +107,20 @@ Server::Server( int port )
     // cout << "Connection closed..." << endl;
 }
 
+// Getters
+
+Group Server::getGroup( string title )
+{
+    // Iterate trough existing groups
+    for (int i = 0; i < this->groups.size(); i++) {
+
+        // If the current group exists, do not add it
+        if (this->groups[i].getTitle() == title) {
+            return this->groups[i];
+        }
+    }
+}
+
 // Methods
 
 bool Server::addGroup( Group group ) 
@@ -203,6 +217,33 @@ bool Server::addUserToGroup( User user, Group group )
     return add;
 }
 
+bool Server::inGroup( string title, User user )
+{
+    bool found = false;
+
+    // Iterate trough existing groups
+    for (int i = 0; i < this->groups.size() && !found; i++) {
+
+        // If the group exists, check if the user is in
+        if (this->groups[i].getTitle() == title) {
+
+            // Check if the user is in
+            vector<User> auxUsers = this->groups[i].getUsers();
+            for ( int j = 0; j < auxUsers.size() && !found; j++ ) {
+
+                // If the user exists in the group, end
+                if ( auxUsers[j].getName() == user.getName() ) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    // Returns true if added, false if not
+    return found;
+}
+
 bool Server::removeGroup( Group group ) 
 {
     bool remove = false;
@@ -271,14 +312,54 @@ int main(int argc, char *argv[])
 
     // Start server
     Server server = Server( atoi(argv[1]) );
-    User user = User("en", "ernesto");
-    server.addUser(user);
+    Group group = Group("grupo");
+    User user1 = User("en", "Ernesto");
+    User user2 = User("es", "Antonio");
+    Message message1 = Message("Hello", "en-UK", user1); message1.setMessage("Hola", "es-ES");
+    Message message2 = Message("Adios", "es-ES", user2); message2.setMessage("Bye", "en-UK");
+
+    group.addUser(user1);
+    group.addUser(user2);
+    group.addMessage(message1);
+    group.addMessage(message2);
+
+    server.addUser(user1);
+    server.addUser(user2);
+    server.addGroup(group);
+
+    // Print users
 
     vector<User> users = server.getUsers();
 
     for (int i = 0; i < users.size(); i++) {
         cout << users[i].getName() << endl;
     }
+
+    // Print messages in a language in group
+
+    vector<Message> messages = server.getGroup(group.getTitle()).getMessages();
+
+    cout << "Messages in english:" << endl;
+
+    for (int i = 0; i < messages.size(); i++) {
+        cout << messages[i].getText("en-UK") << endl;
+    }
+
+    // Print user messages in group
+
+    cout << "Ernesto's messages:" << endl;
+
+    for (int i = 0; i < messages.size(); i++) {
+
+        if ( messages[i].getUser().getName() == user1.getName() ) {
+            cout << messages[i].getText("en-UK") << endl;
+            cout << messages[i].getText("es-ES") << endl;
+        }
+    }
+
+    // cout << message1.getText("en-UK") << endl;
+    // cout << server.getGroup("grupo").getTitle() << endl;
+    // cout << server.inGroup("grupo", user1) << endl;
 
     return 0;   
 }

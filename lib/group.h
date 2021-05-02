@@ -22,7 +22,7 @@ class Group
     public:
 
         // Constructor
-        Group( string title, User user );
+        Group( string title );
 
         // Getters
         vector<Message> getMessages() { return messages; }

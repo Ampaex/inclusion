@@ -1,3 +1,5 @@
+// g++ -c group.cpp
+
 #include "group.h"
 
 using namespace std;
@@ -8,10 +10,9 @@ using namespace std;
 
 // Constructor
 
-Group::Group( string title, User user )
+Group::Group( string title )
 {
   this->title = title;
-  this->users.push_back(user);
 }
 
 // Setters
