@@ -119,6 +119,8 @@ Group Server::getGroup( string title )
             return this->groups[i];
         }
     }
+
+    return Group();
 }
 
 // Methods
@@ -337,7 +339,7 @@ int main(int argc, char *argv[])
 
     // Print messages in a language in group
 
-    vector<Message> messages = server.getGroup(group.getTitle()).getMessages();
+    vector<Message> messages = server.getGroup("grup").getMessages();
 
     cout << "Messages in english:" << endl;
 
@@ -352,8 +354,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < messages.size(); i++) {
 
         if ( messages[i].getUser().getName() == user1.getName() ) {
-            cout << messages[i].getText("en-UK") << endl;
-            cout << messages[i].getText("es-ES") << endl;
+            // cout << messages[i].getText("en-UK") << endl;
+            // cout << messages[i].getText("es-ES") << endl;
+            cout << messages[i];
         }
     }
 

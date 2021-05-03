@@ -14,6 +14,24 @@ Message::Message( string message, string language, User user )
   this->user = user;
 }
 
+// Operators
+
+ostream& operator<<(ostream& os, const Message& message)
+{
+    // Print language
+    os << "Message" << ':' << message.language << ',';
+
+    // Print messages
+    for(map<string, string>::const_iterator it = message.message.begin(); it != message.message.end(); ++it) {
+      std::cout << it->first << ',' << it->second << ',';
+    }
+
+    // Print user
+    os << message.user << '/';
+
+    return os;
+}
+
 //////////////////////
 //      MAIN        //
 //////////////////////

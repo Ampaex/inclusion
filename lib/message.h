@@ -16,7 +16,6 @@ class Message
 
         // Attributes
         time_t epoch;
-        // int groupID;
         string language;
         map<std::string, std::string> message;
         User user;
@@ -28,7 +27,6 @@ class Message
 
         // Getters
         time_t getEpoch() { return epoch; }
-        // int getGroup() { return groupID; }
         string getLanguage() { return language; }
         string getText( string language ) { return message[language]; }
         User getUser() { return user; }
@@ -37,6 +35,9 @@ class Message
         void setMessage( string message, string newLanguage ) { this->message[newLanguage] = message; };
 
         // Methods
+
+        // Operators
+        friend ostream& operator<<(ostream& os, const Message& message);
 };
 
 #endif // MESSAGE_H

@@ -10,6 +10,11 @@ using namespace std;
 
 // Constructor
 
+Group::Group()
+{
+  this->title = "";
+}
+
 Group::Group( string title )
 {
   this->title = title;
@@ -76,9 +81,31 @@ bool Group::removeUser( User user )
     return remove;
 }
 
+// Operators
+
+ostream& operator<<(ostream& os, const Group& group)
+{
+    // Print group
+    os << "Group" << ':' << group.title << '/';
+
+    // Print messages
+    for ( int i = 0; i < group.messages.size(); i++ ) {
+        os << group.messages[i];
+    }
+
+    // Print users
+    for ( int i = 0; i < group.users.size(); i++ ) {
+        os << group.users[i];
+    }
+
+    return os;
+}
+
 //////////////////////
 //      MAIN        //
 //////////////////////
+
+// g++ -c *.cpp
 
 // int main( int argc, char *argv[], char *envp[] )
 // {

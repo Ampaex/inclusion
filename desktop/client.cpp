@@ -71,6 +71,22 @@ Client::Client( char* ip, int port )
     cout << "Connection closed" << endl;
 }
 
+// Getters
+
+Group Client::getGroup( string title )
+{
+    // Iterate trough existing groups
+    for (int i = 0; i < this->groups.size(); i++) {
+
+        // If the current group exists, do not add it
+        if (this->groups[i].getTitle() == title) {
+            return this->groups[i];
+        }
+    }
+
+    return Group();
+}
+
 // Methods
 
 bool Client::addGroup( Group group ) 

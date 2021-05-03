@@ -22,6 +22,7 @@ class Group
     public:
 
         // Constructor
+        Group();
         Group( string title );
 
         // Getters
@@ -36,6 +37,9 @@ class Group
         void addMessage( Message message );
         bool addUser( User user );
         bool removeUser( User user );
+
+        // Operators
+        friend ostream& operator<<(ostream& os, const Group& group);
 };
 
 #endif // GROUP_H

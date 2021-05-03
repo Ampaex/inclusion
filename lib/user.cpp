@@ -24,6 +24,14 @@ void User::setName( string name )
   this->name = name;
 }
 
+// Operators
+
+ostream& operator<<(ostream& os, const User& user)
+{
+    os << "User" << ':' << user.name << ',' << user.language << '/';
+    return os;
+}
+
 //////////////////////
 //      MAIN        //
 //////////////////////

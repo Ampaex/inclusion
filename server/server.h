@@ -30,7 +30,6 @@ class Server
         // Attributes
         int port;
         vector<Group> groups;
-        vector<string> titles;
         vector<User> users;
 
     public:
@@ -40,7 +39,6 @@ class Server
         ~Server() {}
 
         // Getters
-        vector<string> getTitles() { return titles; }
         Group getGroup( string title );
         vector<Group> getGroups() { return groups; }
         vector<User> getUsers() { return users; }

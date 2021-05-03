@@ -29,6 +29,10 @@ class User
         void setName( string name );
 
         // Methods
+
+        // Operators
+        friend ostream& operator<<(ostream& os, const User& user);
 };
+
 
 #endif // USER_H
