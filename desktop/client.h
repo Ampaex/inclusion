@@ -4,7 +4,9 @@
 #include "../lib/group.h"
 #include "../lib/message.h"
 #include "../lib/user.h"
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <stdio.h>
 #include <sys/types.h>
@@ -19,7 +21,6 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include <fstream>
 using namespace std;
 
 class Client 
@@ -33,7 +34,7 @@ class Client
     public:
 
         // Constructor
-        Client( char* ip, int port );
+        Client() {}
         ~Client() {}
 
         // Getters

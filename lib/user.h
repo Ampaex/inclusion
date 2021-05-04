@@ -18,7 +18,7 @@ class User
 
         // Constructor
         User() { language = ""; name = ""; };
-        User( string language, string user );
+        User( string user, string language );
 
         // Getters
         string getLanguage() { return language; }

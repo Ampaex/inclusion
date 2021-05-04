@@ -19,15 +19,15 @@ Message::Message( string message, string language, User user )
 ostream& operator<<(ostream& os, const Message& message)
 {
     // Print language
-    os << "Message" << ':' << message.language << ',';
+    os << "Message" << ':';
 
     // Print messages
     for(map<string, string>::const_iterator it = message.message.begin(); it != message.message.end(); ++it) {
-      std::cout << it->first << ',' << it->second << ',';
+      os << it->first << ",\"" << it->second << "\",";
     }
 
     // Print user
-    os << message.user << '/';
+    os << message.user;
 
     return os;
 }

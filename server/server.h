@@ -4,7 +4,9 @@
 #include "../lib/group.h"
 #include "../lib/message.h"
 #include "../lib/user.h"
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <stdio.h>
 #include <sys/types.h>
@@ -19,7 +21,6 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include <fstream>
 
 using namespace std;
 
@@ -28,14 +29,13 @@ class Server
     private:
 
         // Attributes
-        int port;
         vector<Group> groups;
         vector<User> users;
 
     public:
 
         // Constructor
-        Server( int port );
+        Server() {}
         ~Server() {}
 
         // Getters
@@ -49,8 +49,14 @@ class Server
         bool addUser( User user );
         bool addUserToGroup( User user, Group group );
         bool inGroup( string title, User user );
+        bool parseGroup( string &msg );
+        bool parseMessage( string &msg );
+        bool parseNewUser( string &msg );
+        bool parseUserGroup( string &msg );
         bool removeGroup( Group group );
         bool removeUser( User user );
+
+        string parseType( string &msg );
 };
 
 #endif // SERVER_H

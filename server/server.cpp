@@ -8,105 +8,6 @@
 //      SERVER     //
 /////////////////////
 
-// Constructor
-
-Server::Server( int port ) 
-{
-    // // Message buffer 
-    // char msg[1500];
-     
-    // // Socket and connection tools 
-    // sockaddr_in servAddr;
-    // bzero((char*)&servAddr, sizeof(servAddr));
-    // servAddr.sin_family = AF_INET;
-    // servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    // servAddr.sin_port = htons(port);
- 
-    // // Open stream oriented socket with internet address
-    // // Keep track of the socket descriptor
-    // int serverSd = socket(AF_INET, SOCK_STREAM, 0);
-    // if(serverSd < 0)
-    // {
-    //     cerr << "Error establishing the server socket" << endl;
-    //     exit(0);
-    // }
-
-    // // Bind the socket to its local address
-    // int bindStatus = bind(serverSd, (struct sockaddr*) &servAddr, sizeof(servAddr));
-    // if(bindStatus < 0)
-    // {
-    //     cerr << "Error binding socket to local address" << endl;
-    //     exit(0);
-    // }
-    // cout << "Waiting for a client to connect..." << endl;
-
-    // // Listen for up to 5 requests at a time
-    // listen(serverSd, 5);
-
-    // // Receive a request from client using accept
-    // // We need a new address to connect with the client
-    // sockaddr_in newSockAddr;
-    // socklen_t newSockAddrSize = sizeof(newSockAddr);
-
-    // // Accept, create a new socket descriptor to 
-    // // handle the new connection with client
-    // int newSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
-    // if(newSd < 0)
-    // {
-    //     cerr << "Error accepting request from client!" << endl;
-    //     exit(1);
-    // }
-    // cout << "Connected with client!" << endl;
-
-    // // Keep track of the session time
-    // struct timeval start1, end1;
-    // gettimeofday(&start1, NULL);
-
-    // // Keep track of the amount of data sent
-    // int bytesRead, bytesWritten = 0;
-    // while(1)
-    // {
-    //     // Receive a message from the client (listen)
-    //     cout << "Awaiting client response..." << endl;
-    //     memset(&msg, 0, sizeof(msg)); // Clear the buffer
-    //     bytesRead += recv(newSd, (char*)&msg, sizeof(msg), 0);
-
-    //     if(!strcmp(msg, "exit"))
-    //     {
-    //         cout << "Client has quit the session" << endl;
-    //         break;
-    //     }
-
-    //     cout << "Client: " << msg << endl;
-    //     cout << ">";
-
-    //     string data;
-    //     getline(cin, data);
-    //     memset(&msg, 0, sizeof(msg)); // Clear the buffer
-    //     strcpy(msg, data.c_str());
-    //     if(data == "exit")
-    //     {
-    //         // Send to the client that server has closed the connection
-    //         send(newSd, (char*)&msg, strlen(msg), 0);
-    //         break;
-    //     }
-
-    //     // Send the message to client
-    //     bytesWritten += send(newSd, (char*)&msg, strlen(msg), 0);
-    // }
-
-    // // Close the socket descriptors after we're all done
-    // gettimeofday(&end1, NULL);
-    // close(newSd);
-    // close(serverSd);
-
-    // // Session end
-    // cout << "********Session********" << endl;
-    // cout << "Bytes written: " << bytesWritten << " Bytes read: " << bytesRead << endl;
-    // cout << "Elapsed time: " << (end1.tv_sec - start1.tv_sec) << " secs" << endl;
-    // cout << "Connection closed..." << endl;
-}
-
 // Getters
 
 Group Server::getGroup( string title )
@@ -293,6 +194,139 @@ bool Server::removeUser( User user )
     return remove;
 }
 
+bool Server::parseGroup( string &msg ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string language = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Fetch language
+    delimiter = "/";
+    language = msg.substr(0, msg.find(delimiter));
+    valid = language != "" && valid ? true : false;
+
+    // Create user if possible
+    if (valid) 
+    {
+        this->addUser(User(language, name));
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::parseMessage( string &msg ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string language = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Fetch language
+    delimiter = "/";
+    language = msg.substr(0, msg.find(delimiter));
+    valid = language != "" && valid ? true : false;
+
+    // Create user if possible
+    if (valid) 
+    {
+        this->addUser(User(language, name));
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::parseNewUser( string &msg ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string language = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Fetch language
+    delimiter = "/";
+    language = msg.substr(0, msg.find(delimiter));
+    valid = language != "" && valid ? true : false;
+
+    // Create user if possible
+    if (valid) 
+    {
+        this->addUser(User(language, name));
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::parseUserGroup( string &msg ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string language = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Fetch language
+    delimiter = "/";
+    language = msg.substr(0, msg.find(delimiter));
+    valid = language != "" && valid ? true : false;
+
+    // Create user if possible
+    if (valid) 
+    {
+        this->addUser(User(language, name));
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+string Server::parseType( string &msg )
+{
+    // Will return none if no class applies
+    string classType = "None";
+    string delimiter = ":";
+
+    // Fetch class to build
+    classType = msg.substr(0, msg.find(delimiter));
+
+    // If class fetched is non applicable, change it to "None"
+    if (classType != "Group" && classType != "Message" && classType != "User")
+        classType = "None";
+
+    // Erase extracted token (delimiter included)
+    else
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Return type
+    return classType;
+}
+
 //////////////////////
 //      MAIN        //
 //////////////////////
@@ -313,56 +347,141 @@ int main(int argc, char *argv[])
     }
 
     // Start server
-    Server server = Server( atoi(argv[1]) );
-    Group group = Group("grupo");
-    User user1 = User("en", "Ernesto");
-    User user2 = User("es", "Antonio");
-    Message message1 = Message("Hello", "en-UK", user1); message1.setMessage("Hola", "es-ES");
-    Message message2 = Message("Adios", "es-ES", user2); message2.setMessage("Bye", "en-UK");
+    Server server = Server();
+    server.addGroup(Group("Group 1"));
+    server.addGroup(Group("Group 2"));
+    server.addGroup(Group("Group 3"));
+    server.addGroup(Group("Group 4"));
+    server.addGroup(Group("Group 5"));
 
-    group.addUser(user1);
-    group.addUser(user2);
-    group.addMessage(message1);
-    group.addMessage(message2);
+    // Set socket variables
+    char msg[1500]; // Message buffer 
+    int port = atoi(argv[1]); // Port
+     
+    // Socket and connection tools 
+    sockaddr_in servAddr;
+    bzero((char*)&servAddr, sizeof(servAddr));
+    servAddr.sin_family = AF_INET;
+    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servAddr.sin_port = htons(port);
+ 
+    // Open stream oriented socket with internet address
+    // Keep track of the socket descriptor
+    int serverSd = socket(AF_INET, SOCK_STREAM, 0);
+    if(serverSd < 0) { cerr << "Error establishing the server socket" << endl; exit(0); }
 
-    server.addUser(user1);
-    server.addUser(user2);
-    server.addGroup(group);
+    // Bind the socket to its local address
+    int bindStatus = bind(serverSd, (struct sockaddr*) &servAddr, sizeof(servAddr));
+    if(bindStatus < 0) { cerr << "Error binding socket to local address" << endl; exit(0); }
+    else               { cout << "Waiting for a client to connect..." << endl; }
 
-    // Print users
+    // Listen for up to 5 requests at a time
+    listen(serverSd, 5);
 
-    vector<User> users = server.getUsers();
+    // Receive a request from client using accept
+    // We need a new address to connect with the client
+    sockaddr_in newSockAddr;
+    socklen_t newSockAddrSize = sizeof(newSockAddr);
 
-    for (int i = 0; i < users.size(); i++) {
-        cout << users[i].getName() << endl;
-    }
+    // Accept, create a new socket descriptor to 
+    // handle the new connection with client
+    int newSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
+    if(newSd < 0) { cerr << "Error accepting request from client!" << endl; exit(1); }
+    else          { cout << "Connected with client!" << endl; }
 
-    // Print messages in a language in group
+    // Keep track of the session time
+    struct timeval start1, end1;
+    gettimeofday(&start1, NULL);
 
-    vector<Message> messages = server.getGroup("grup").getMessages();
+    // Keep track of the amount of data sent
+    int bytesRead, bytesWritten = 0;
+    while(1)
+    {
+        // Receive a message from the client (listen)
+        cout << "Client: ";
 
-    cout << "Messages in english:" << endl;
+        memset(&msg, 0, sizeof(msg)); // Clear the buffer
+        bytesRead += recv(newSd, (char*)&msg, sizeof(msg), 0);
 
-    for (int i = 0; i < messages.size(); i++) {
-        cout << messages[i].getText("en-UK") << endl;
-    }
-
-    // Print user messages in group
-
-    cout << "Ernesto's messages:" << endl;
-
-    for (int i = 0; i < messages.size(); i++) {
-
-        if ( messages[i].getUser().getName() == user1.getName() ) {
-            // cout << messages[i].getText("en-UK") << endl;
-            // cout << messages[i].getText("es-ES") << endl;
-            cout << messages[i];
+        // End connection: client
+        if(!strcmp(msg, "exit"))
+        {
+            cout << "Client has quit the session" << endl;
+            break;
         }
+
+        /////////////////////
+        // Object handling //
+        /////////////////////
+
+        // Parse class type from message
+        stringstream buffer;
+        string data;
+        string msgString = msg;
+        string classType = server.parseType(msgString);
+
+        // TODO: Create objects
+        if (classType == "Group") 
+        {
+            bool valid = server.parseMessage(msgString);
+
+            // If correct, return valid
+            if (valid) 
+            {
+                data = "Valid";
+            }
+        }
+        else if (classType == "User")
+        {
+            // Parse and create user if possible
+            bool valid = server.parseNewUser(msgString);
+
+            // If valid, return existing groups titles
+            if (valid) 
+            {
+                vector<Group> groups = server.getGroups();
+                for (int i = 0; i < groups.size(); i++) 
+                {
+                    // Append group
+                    buffer << groups[i];
+                }
+
+                // Save buffer in data
+                data = buffer.str();
+            }     
+        }
+        else 
+        {
+            data = "Continue";
+        }
+
+        /////////////////////
+        //  End of handler //
+        /////////////////////
+
+        // Print client message
+        cout << msg << endl;
+        cout << "Server: " << data << endl;
+
+        memset(&msg, 0, sizeof(msg)); // Clear the buffer
+        strcpy(msg, data.c_str());
+
+        // End connection: server
+        if(data == "exit")
+        {
+            // Send to the client that server has closed the connection
+            send(newSd, (char*)&msg, strlen(msg), 0);
+            break;
+        }
+
+        // Send the message to client
+        bytesWritten += send(newSd, (char*)&msg, strlen(msg), 0);
     }
 
-    // cout << message1.getText("en-UK") << endl;
-    // cout << server.getGroup("grupo").getTitle() << endl;
-    // cout << server.inGroup("grupo", user1) << endl;
+    // Close the socket descriptors after we're all done
+    gettimeofday(&end1, NULL);
+    close(newSd);
+    close(serverSd);
 
     return 0;   
 }

@@ -88,14 +88,14 @@ ostream& operator<<(ostream& os, const Group& group)
     // Print group
     os << "Group" << ':' << group.title << '/';
 
-    // Print messages
-    for ( int i = 0; i < group.messages.size(); i++ ) {
-        os << group.messages[i];
-    }
-
     // Print users
     for ( int i = 0; i < group.users.size(); i++ ) {
         os << group.users[i];
+    }
+
+    // Print messages
+    for ( int i = 0; i < group.messages.size(); i++ ) {
+        os << group.messages[i];
     }
 
     return os;
