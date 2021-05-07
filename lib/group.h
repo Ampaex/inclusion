@@ -33,6 +33,7 @@ class Group
         // Setters
         void setMessages( vector<Message> messages );
         void setTitle( string title );
+        void setUsers( vector<User> users );
 
         // Methods
         void addMessage( Message message );

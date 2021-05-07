@@ -23,7 +23,7 @@ ostream& operator<<(ostream& os, const Message& message)
 
     // Print messages
     for(map<string, string>::const_iterator it = message.message.begin(); it != message.message.end(); ++it) {
-      os << it->first << ",\"" << it->second << "\",";
+      os << it->first << "," << it->second << "/";
     }
 
     // Print user

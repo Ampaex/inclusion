@@ -42,31 +42,31 @@ class Server
 
         // Getters
         Group getGroup( string title );
-        vector<Group> getGroups() { return groups; }p
+        vector<Group> getGroups() { return groups; }
         User getUser( string name );
         vector<tuple<User, string>> getUsers() { return users; }
 
+        // Setters
+        void setGroup( Group group );
+
         // Methods
-        bool addNewGroup( Group group );
-        bool addNewUser( User user );
-        bool addMessageToGroup( Message message, Group group );
-        bool addUserToGroup( User user, Group group );
-        bool isUserInGroup( User user, string title );
+        bool addGroup( Group group );
+        bool addUser( User user );
         bool removeGroup( Group group );
         bool removeUser( User user );
 
         // Socket: Connection
-        void handleRequest( string &data,  string &message );
         void startConnection( int &serverSd, int &clientSd, int port );
         void receiveConnection();
+        void receiveRequest( string &data,  string &message );
         void endConnection( int &serverSd, int &clientSd );
 
-        // Socket: Data
+        // Socket: Data management
         string processClassType( string &msg );
-        bool processGroupData( string &data, string &msg );
-        bool addNewUser( string &msg );
-        bool addMessageToGroup( string &msg, Group &group );
-        bool addUserToGroup( string &msg, Group &group );
+        bool processGroupRequest( string &data, string &msg );
+        bool receivedUser( string &msg );
+        bool receivedMessage( string &msg, Group &group );
+        bool receivedGroupRequest( string &msg, Group &group );
 };
 
 #endif // SERVER_H

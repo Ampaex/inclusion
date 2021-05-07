@@ -44,13 +44,13 @@ class Client
         void setGroup( Group group );
 
         // Methods
-        bool addGroup( Group group );
-        bool addMessage( Message message, Group group );
+        bool addGroup( string title );
         bool removeGroup( Group group );
 
+        // Socket: Connection
+        void startConnection(int &clientSd, char *ip, int port);
         void receiveAnswer( string &msg );
         void sendRequest( string &data );
-        void startConnection(int &clientSd, char *ip, int port);
         void endConnection(int &clientSd);
 }; 
 

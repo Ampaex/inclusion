@@ -32,6 +32,11 @@ void Group::setTitle( string user )
   this->title = user;
 }
 
+void Group::setUsers( vector<User> users )
+{
+  this->users = users;
+}
+
 // Methods
 
 void Group::addMessage( Message message ) 
@@ -94,6 +99,12 @@ ostream& operator<<(ostream& os, const Group& group)
     os << "Group" << ':' << group.title << '/';
 
     // Print users
+    if ( group.users.size() == 0 )
+    {
+        User user = User();
+        os << user;
+    }
+
     for ( int i = 0; i < group.users.size(); i++ ) {
         os << group.users[i];
     }
@@ -105,15 +116,3 @@ ostream& operator<<(ostream& os, const Group& group)
 
     return os;
 }
-
-//////////////////////
-//      MAIN        //
-//////////////////////
-
-// g++ -c *.cpp
-
-// int main( int argc, char *argv[], char *envp[] )
-// {
-//     Group g = Group("Informática");
-//     cout << g.getTitle() << endl;
-// }

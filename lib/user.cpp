@@ -6,10 +6,10 @@
 
 // Constructor
 
-User::User( string language, string name )
+User::User( string name, string language )
 {
-  this->language = language;
   this->name = name;
+  this->language = language;
 }
 
 // Setters
