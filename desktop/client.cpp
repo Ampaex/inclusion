@@ -4,20 +4,18 @@
 //      CLIENT     //
 /////////////////////
 
-// Getters
+// Setters
 
-Group Client::getGroup( string title )
+void Client::setGroup( Group group )
 {
     // Iterate trough existing groups
     for (int i = 0; i < this->groups.size(); i++) {
 
         // If the current group exists, do not add it
-        if (this->groups[i].getTitle() == title) {
-            return this->groups[i];
+        if (this->groups[i] == group.getTitle()) {
+            this->group = group;
         }
     }
-
-    return Group();
 }
 
 // Methods
@@ -30,14 +28,14 @@ bool Client::addGroup( Group group )
     for (int i = 0; i < this->groups.size(); i++) {
 
         // If the current group exists, do not add it
-        if (this->groups[i].getTitle() == group.getTitle()) {
+        if (this->groups[i] == group.getTitle()) {
             add = false;
             break;
         }
     }
 
-    // Add the groups if it does not exist yet
-    if (add) this->groups.push_back(group);
+    // Add the group if it does not exist yet
+    if (add) this->groups.push_back(group.getTitle());
 
     // Returns true if added, false if not
     return add;
@@ -51,8 +49,8 @@ bool Client::addMessage( Message message, Group group )
     for (int i = 0; i < this->groups.size(); i++) {
 
         // If the current group exists, add it
-        if (this->groups[i].getTitle() == group.getTitle()) {
-            this->groups[i].addMessage( message );
+        if (this->groups[i] == group.getTitle()) {
+            this->group.addMessage( message );
             add = true;
             break;
         }
@@ -71,7 +69,7 @@ bool Client::removeGroup( Group group )
 
         // If the current user has the same name as 
         // the user to remove, delete it
-        if (this->groups[i].getTitle() == group.getTitle()) {
+        if (this->groups[i] == group.getTitle()) {
             remove = true;
             this->groups.erase(this->groups.begin() + i);
             break;
@@ -80,6 +78,81 @@ bool Client::removeGroup( Group group )
 
     // Returns true if removed, false if not
     return remove;
+}
+
+void Client::receiveAnswer( string &msg )
+{
+    // TODO: Receive groups
+    // TODO: Receive new user in group
+    // TODO: Receive new message in group
+}
+
+void Client::sendRequest( string &data )
+{
+    stringstream buffer;
+
+    // Set the user to send
+    if (data == "user") 
+    {
+        this->user.setName("Example");
+        this->user.setLanguage("en-UK");
+        buffer << user;
+        data = buffer.str();
+    }
+    // Set the message to send
+    else if (data == "message")
+    {
+        if (user.getName() != "")
+        {
+            Message message = Message("Example", "es-ES", user);
+            // TODO: Add message to current group
+            // this->group.addMessage(message);
+            buffer << "Group:" << group.getTitle() << "/" << message;
+            data = buffer.str();
+        }
+        else 
+        {
+            data = "";
+        }
+    }
+    // Set user in group
+    else if (data == "group")
+    {
+        if (this->user.getName() != "")
+        {
+            // TODO: Add user to current group
+            // this->group.addUser(user);
+            buffer << "Group:" << this->group.getTitle() << "/" << user;
+            data = buffer.str();
+        }
+        else 
+        {
+            data = "Not valid";
+        }
+    } 
+}
+
+void Client::startConnection(int &clientSd, char *ip, int port)
+{     
+    // Socket and connection tools 
+    struct hostent* host = gethostbyname(ip); 
+    sockaddr_in clientAddr;   
+    bzero((char*)& clientAddr, sizeof(clientAddr)); 
+    clientAddr.sin_family = AF_INET; 
+    clientAddr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
+    clientAddr.sin_port = htons(port);
+    clientSd = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Try to connect
+    int status = connect(clientSd, (sockaddr*) &clientAddr, sizeof(clientAddr));
+    if(status < 0)  { cout << "Error connecting to socket!" << endl; exit(0); }
+    else            { cout << "Connected to the server!" << endl; }
+}
+
+void Client::endConnection(int &clientSd)
+{     
+    // Close the socket descriptors after we're all done
+    close(clientSd);
 }
 
 //////////////////////
@@ -93,11 +166,6 @@ int main(int argc, char *argv[])
     // Input: ./client 127.0.0.1 12345 (IP + Port)
     // Terminate: exit
 
-    // TODO: Receive groups
-    // TODO: Receive new user in group
-    // TODO: Receive new message in group
-    // TODO: Send message
-
     // Check provided arguments
     if(argc != 3)
     {
@@ -106,111 +174,72 @@ int main(int argc, char *argv[])
     
     // Start client
     Client client = Client();
-    User user = User();
-    Group group = Group();
+    Group group = Group("Group 1");
+    client.setGroup(group);
 
     // Set socket variables
-    char msg[1500]; // Message buffer 
-    char *ip = argv[1]; // IP address
-    int port = atoi(argv[2]); // Port
+    char message[1500];
+    int clientSd;
+    string data;
 
-    // Socket and connection tools 
-    struct hostent* host = gethostbyname(ip); 
-    sockaddr_in clientAddr;   
-    bzero((char*)& clientAddr, sizeof(clientAddr)); 
-    clientAddr.sin_family = AF_INET; 
-    clientAddr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
-    clientAddr.sin_port = htons(port);
-    int clientSd = socket(AF_INET, SOCK_STREAM, 0);
+    // Start connection
+    client.startConnection(clientSd, argv[1], atoi(argv[2]));
 
-    // Try to connect
-    int status = connect(clientSd, (sockaddr*) &clientAddr, sizeof(clientAddr));
-    if(status < 0)  { cout << "Error connecting to socket!" << endl; exit(0); }
-    else            { cout << "Connected to the server!" << endl; }
-
-    int bytesRead, bytesWritten = 0;
-    struct timeval start1, end1;
-    gettimeofday(&start1, NULL);
+    // Send and receive data
     while(1)
     {
-        cout << "> ";
-        string data;
-        getline(cin, data);
-        stringstream buffer;
+        /////////////////////
+        // Object handling //
+        /////////////////////
 
-        // Set the user to send
-        if (data == "user") 
-        {
-            client.setUser(User("en-UK", "Example"));
-            user.setName("Example");
-            user.setLanguage("en-UK");
-            buffer << user;
-            data = buffer.str();
-        }
-        // Set the message to send
-        else if (data == "message")
-        {
-            if (user.getName() != "")
-            {
-                Message message = Message("Example", "es-ES", user);
-                // Add message to current group
-                group.addMessage(message);
-                buffer << "Group:" << group.getTitle() << "/" << message;
-                data = buffer.str();
-            }
-            else 
-            {
-                data = "";
-            }
-        }
-        // Set user to group
-        else if (data == "group")
-       {
-            if (user.getName() != "")
-            {
-                // Add message to current group
-                group.addUser(user);
-                buffer << "Group:" << group.getTitle() << "/" << user;
-                data = buffer.str();
-            }
-            else 
-            {
-                data = "";
-            }
-       } 
+        cout << "> "; 
+        // TODO: Qt request
+        getline(cin, data);p 
+        client.sendRequest(data);
 
-        memset(&msg, 0, sizeof(msg)); // Clear the buffer
-        strcpy(msg, data.c_str());
+        //////////////////////
+        //   Send message   //
+        //////////////////////
 
-        // End connection: client
-        if(buffer.str() == "exit" || data == "exit")
+        memset(&message, 0, sizeof(message));
+        strcpy(message, data.c_str());
+        send(clientSd, (char*)&message, strlen(message), 0);
+
+         // End connection: client
+        if(data == "exit")
         {
-            send(clientSd, (char*)&msg, strlen(msg), 0);
             break;
         }
+        // Wait for response
+        else 
+        {
+            cout << "Awaiting server response..." << endl;
+        }    
 
-        // Send client message
-        bytesWritten += send(clientSd, (char*)&msg, strlen(msg), 0);
-        cout << "Awaiting server response..." << endl;
-        memset(&msg, 0, sizeof(msg)) ; // Clear the buffer
+        /////////////////////
+        // Receive message //
+        /////////////////////
 
-        // Receive server message
-        bytesRead += recv(clientSd, (char*)&msg, sizeof(msg), 0);
+        memset(&message, 0, sizeof(message));
+        recv(clientSd, (char*)&message, sizeof(message), 0);
 
         // End connection: server
-        if(!strcmp(msg, "exit"))
+        if(!strcmp(message, "exit"))
         {
-            cout << "Server has quit the session" << endl;
+            cout << "Server: Session quit" << endl;
             break;
         }
-
-        // Print server message
-        cout << "Server: " << msg << endl;
+        // Print message
+        else 
+        {
+            cout << "Server: " << message << endl;
+            string msg = message;
+            client.receiveAnswer(msg);
+        }
     }
 
     // Close the socket descriptors after we're all done
-    gettimeofday(&end1, NULL);
-    close(clientSd);
+    client.endConnection(clientSd);
 
     return 0;    
 }
