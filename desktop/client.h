@@ -28,26 +28,30 @@ class Client
     private:
 
         // Attributes
-        vector<Group> groups;
-        User user;
+        vector<string> groups;
 
     public:
 
+        // Attributes
+        User user;
+        Group group;
+
         // Constructor
-        Client() {}
+        Client() { user = User(); group = Group(); }
         ~Client() {}
 
-        // Getters
-        Group getGroup( string title );
-        User getUser() { return user; }
-
         // Setters
-        void setUser( User user ) { this->user = user; }
+        void setGroup( Group group );
 
         // Methods
         bool addGroup( Group group );
         bool addMessage( Message message, Group group );
         bool removeGroup( Group group );
+
+        void receiveAnswer( string &msg );
+        void sendRequest( string &data );
+        void startConnection(int &clientSd, char *ip, int port);
+        void endConnection(int &clientSd);
 }; 
 
 #endif // CLIENT_H

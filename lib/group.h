@@ -31,6 +31,7 @@ class Group
         vector<User> getUsers() { return users; }
 
         // Setters
+        void setMessages( vector<Message> messages );
         void setTitle( string title );
 
         // Methods

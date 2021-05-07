@@ -22,6 +22,11 @@ Group::Group( string title )
 
 // Setters
 
+void Group::setMessages( vector<Message> messages )
+{
+  this->messages = messages;
+}
+
 void Group::setTitle( string user )
 {
   this->title = user;

@@ -1,12 +1,19 @@
-// TODO: Group name list
-// TODO: Receive name and check if valid
-// TODO: Receive group message
-
 #include "server.h"
 
 /////////////////////
 //      SERVER     //
 /////////////////////
+
+// Constructor
+
+Server::Server()
+{
+    server.addNewGroup(Group("Group 1"));
+    server.addNewGroup(Group("Group 2"));
+    server.addNewGroup(Group("Group 3"));
+    server.addNewGroup(Group("Group 4"));
+    server.addNewGroup(Group("Group 5"));
+}
 
 // Getters
 
@@ -15,18 +22,34 @@ Group Server::getGroup( string title )
     // Iterate trough existing groups
     for (int i = 0; i < this->groups.size(); i++) {
 
-        // If the current group exists, do not add it
+        // If found, return it
         if (this->groups[i].getTitle() == title) {
             return this->groups[i];
         }
     }
 
+    // Return empty group
     return Group();
+}
+
+User Server::getUser( string name )
+{
+    // Iterate trough existing groups
+    for (int i = 0; i < this->users.size(); i++) {
+
+        // If found, return it
+        if (get<0>(this->users[i]).getName() == name) {
+            return get<0>(this->users[i]);
+        }
+    }
+
+    // Return empty group
+    return User();
 }
 
 // Methods
 
-bool Server::addGroup( Group group ) 
+bool Server::addNewGroup( Group group ) 
 {
     bool add = true;
 
@@ -47,7 +70,7 @@ bool Server::addGroup( Group group )
     return add;
 }
 
-bool Server::addMessage( Message message, Group group ) 
+bool Server::addMessageToGroup( Message message, Group group ) 
 {
     bool add = false;
 
@@ -66,7 +89,7 @@ bool Server::addMessage( Message message, Group group )
     return add;
 }
 
-bool Server::addUser( User user ) 
+bool Server::addNewUser( User user ) 
 {
     bool add = true;
 
@@ -74,14 +97,14 @@ bool Server::addUser( User user )
     for (int i = 0; i < this->users.size(); i++) {
 
         // If the current user exists, do not add it
-        if (this->users[i].getName() == user.getName()) {
+        if (get<0>(this->users[i]).getName() == user.getName()) {
             add = false;
             break;
         }
     }
 
     // Add the user if it does not exist yet
-    if (add) this->users.push_back(user);
+    if (add) this->users.push_back(make_tuple(user, ""));
 
     // Returns true if added, false if not
     return add;
@@ -92,21 +115,23 @@ bool Server::addUserToGroup( User user, Group group )
     bool add = false;
     int index = 0;
 
-    // Iterate trough existing users
+    // Iterate through existing users
     for (int i = 0; i < this->users.size(); i++) {
 
         // If the current user exists, add it
-        if (this->users[i].getName() == user.getName()) {
+        if (get<0>(this->users[i]).getName() == user.getName()) {
             add = true;
+            index = i;
             break;
         }
     }
 
-    // Iterate trough existing groups
-    for (int i = 0; i < this->groups.size() && !add; i++) {
+    // Iterate through existing groups
+    for (int i = 0; i < this->groups.size() && add; i++) {
 
         // If the current group exists, add it
         if (this->groups[i].getTitle() == group.getTitle()) {
+            get<1>(this->users[index]) = this->groups[i].getTitle();
             add = true;
             index = i;
             break;
@@ -120,7 +145,7 @@ bool Server::addUserToGroup( User user, Group group )
     return add;
 }
 
-bool Server::inGroup( string title, User user )
+bool Server::isUserInGroup( User user, string title )
 {
     bool found = false;
 
@@ -176,7 +201,7 @@ bool Server::removeUser( User user )
 
         // If the current user has the same name as 
         // the user to remove, delete it
-        if (this->users[i].getName() == user.getName()) {
+        if (get<0>(this->users[i]).getName() == user.getName()) {
             remove = true;
             this->users.erase(this->users.begin() + i);
             break;
@@ -194,170 +219,10 @@ bool Server::removeUser( User user )
     return remove;
 }
 
-bool Server::parseGroup( string &msg ) 
+// Socket: connection
+
+void Server::startConnection( int &serverSd, int &clientSd, int port )
 {
-    // Will return false if no user is created
-    bool valid = false;
-    string name = "";
-    string language = "";
-    string delimiter = ",";
-
-    // Fetch name
-    name = msg.substr(0, msg.find(delimiter));
-    valid = name != "" ? true : false;
-    msg.erase(0, msg.find(delimiter) + delimiter.length());
-
-    // Fetch language
-    delimiter = "/";
-    language = msg.substr(0, msg.find(delimiter));
-    valid = language != "" && valid ? true : false;
-
-    // Create user if possible
-    if (valid) 
-    {
-        this->addUser(User(language, name));
-    }
-
-    // Return whether user was created or not
-    return valid;
-}
-
-bool Server::parseMessage( string &msg ) 
-{
-    // Will return false if no user is created
-    bool valid = false;
-    string name = "";
-    string language = "";
-    string delimiter = ",";
-
-    // Fetch name
-    name = msg.substr(0, msg.find(delimiter));
-    valid = name != "" ? true : false;
-    msg.erase(0, msg.find(delimiter) + delimiter.length());
-
-    // Fetch language
-    delimiter = "/";
-    language = msg.substr(0, msg.find(delimiter));
-    valid = language != "" && valid ? true : false;
-
-    // Create user if possible
-    if (valid) 
-    {
-        this->addUser(User(language, name));
-    }
-
-    // Return whether user was created or not
-    return valid;
-}
-
-bool Server::parseNewUser( string &msg ) 
-{
-    // Will return false if no user is created
-    bool valid = false;
-    string name = "";
-    string language = "";
-    string delimiter = ",";
-
-    // Fetch name
-    name = msg.substr(0, msg.find(delimiter));
-    valid = name != "" ? true : false;
-    msg.erase(0, msg.find(delimiter) + delimiter.length());
-
-    // Fetch language
-    delimiter = "/";
-    language = msg.substr(0, msg.find(delimiter));
-    valid = language != "" && valid ? true : false;
-
-    // Create user if possible
-    if (valid) 
-    {
-        this->addUser(User(language, name));
-    }
-
-    // Return whether user was created or not
-    return valid;
-}
-
-bool Server::parseUserGroup( string &msg ) 
-{
-    // Will return false if no user is created
-    bool valid = false;
-    string name = "";
-    string language = "";
-    string delimiter = ",";
-
-    // Fetch name
-    name = msg.substr(0, msg.find(delimiter));
-    valid = name != "" ? true : false;
-    msg.erase(0, msg.find(delimiter) + delimiter.length());
-
-    // Fetch language
-    delimiter = "/";
-    language = msg.substr(0, msg.find(delimiter));
-    valid = language != "" && valid ? true : false;
-
-    // Create user if possible
-    if (valid) 
-    {
-        this->addUser(User(language, name));
-    }
-
-    // Return whether user was created or not
-    return valid;
-}
-
-string Server::parseType( string &msg )
-{
-    // Will return none if no class applies
-    string classType = "None";
-    string delimiter = ":";
-
-    // Fetch class to build
-    classType = msg.substr(0, msg.find(delimiter));
-
-    // If class fetched is non applicable, change it to "None"
-    if (classType != "Group" && classType != "Message" && classType != "User")
-        classType = "None";
-
-    // Erase extracted token (delimiter included)
-    else
-        msg.erase(0, msg.find(delimiter) + delimiter.length());
-
-    // Return type
-    return classType;
-}
-
-//////////////////////
-//      MAIN        //
-//////////////////////
-
-// Server side TCP socket
-int main(int argc, char *argv[])
-{
-    // Compile: g++ -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o
-    // Input: ./server 12345 (Port)
-    // Terminate: exit
-
-    // Check provided arguments
-    if(argc != 2)
-    {
-        cerr << "Usage: port" << endl;
-        cerr << "Example: ./server 12345" << endl;
-        exit(0);
-    }
-
-    // Start server
-    Server server = Server();
-    server.addGroup(Group("Group 1"));
-    server.addGroup(Group("Group 2"));
-    server.addGroup(Group("Group 3"));
-    server.addGroup(Group("Group 4"));
-    server.addGroup(Group("Group 5"));
-
-    // Set socket variables
-    char msg[1500]; // Message buffer 
-    int port = atoi(argv[1]); // Port
-     
     // Socket and connection tools 
     sockaddr_in servAddr;
     bzero((char*)&servAddr, sizeof(servAddr));
@@ -367,7 +232,7 @@ int main(int argc, char *argv[])
  
     // Open stream oriented socket with internet address
     // Keep track of the socket descriptor
-    int serverSd = socket(AF_INET, SOCK_STREAM, 0);
+    serverSd = socket(AF_INET, SOCK_STREAM, 0);
     if(serverSd < 0) { cerr << "Error establishing the server socket" << endl; exit(0); }
 
     // Bind the socket to its local address
@@ -385,103 +250,299 @@ int main(int argc, char *argv[])
 
     // Accept, create a new socket descriptor to 
     // handle the new connection with client
-    int newSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
-    if(newSd < 0) { cerr << "Error accepting request from client!" << endl; exit(1); }
-    else          { cout << "Connected with client!" << endl; }
+    clientSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
+    if(clientSd < 0) { cerr << "Error accepting request from client!" << endl; exit(1); }
+    else             { cout << "Connected with client!" << endl; }
+}
 
-    // Keep track of the session time
-    struct timeval start1, end1;
-    gettimeofday(&start1, NULL);
+void Server::receiveConnection() {};
 
-    // Keep track of the amount of data sent
-    int bytesRead, bytesWritten = 0;
+void Server::endConnection( int &serverSd, int &clientSd )
+{     
+    // Close the socket descriptors after we're all done
+    close(clientSd);
+    close(serverSd);
+}
+
+// Socket: data
+
+string Server::processClassType( string &msg )
+{
+    // Will return none if no class applies
+    string classType = "None";
+    string delimiter = ":";
+
+    // Fetch class to build
+    classType = msg.substr(0, msg.find(delimiter));
+
+    // If class fetched is non applicable, change it to "None"
+    if (classType != "Group" && classType != "Message" && classType != "User")
+    {
+        classType = "None";
+    }
+
+    // Erase extracted token (delimiter included)
+    else
+    {
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+    }
+
+    // Return type
+    return classType;
+}
+
+bool Server::processGroupData( string &data, string &msg ) 
+{
+    // Will return false if no user is created
+    stringstream buffer;
+    bool valid = false;
+    string title = "";
+    string delimiter = "/";
+
+    // Fetch group
+    title = msg.substr(0, msg.find(delimiter));
+    valid = title != "" ? true : false;
+
+    if (valid)
+    {
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+        Group group = this->getGroup(title);
+
+        // Check if group is empty (not valid)
+        if (group.getTitle() == "")
+        {
+            valid = false;
+        }
+        // Process rest of the message
+        else 
+        {
+            string classType = processClassType(msg);
+
+            if (classType == "User")
+            {
+                valid = addUserToGroup(msg, group);
+
+                // If correct, return group
+                if (valid)
+                {
+                    // Save buffer in data
+                    buffer << group;
+                    data = buffer.str();
+
+                    // TODO: Save group in client array 
+
+                }
+                else 
+                {
+                    data = "Retry";
+                }  
+            }
+            else if (classType == "Message")
+            {
+                valid = addMessageToGroup(msg, group);
+            }
+            else 
+            {
+                valid = false;
+            }
+        }
+    }
+    else 
+    {
+        data = "Retry";
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::addNewUser( string &msg ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string language = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Fetch language
+    delimiter = "/";
+    language = msg.substr(0, msg.find(delimiter));
+    valid = language != "" && valid ? true : false;
+
+    // Create user if possible
+    if (valid) 
+    {
+        this->addNewUser( User(language, name) );
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::addMessageToGroup( string &msg, Group &group ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+
+    // TODO
+
+    // Return whether user was created or not
+    return valid;
+}
+
+bool Server::addUserToGroup( string &msg, Group &group ) 
+{
+    // Will return false if no user is created
+    bool valid = false;
+    string name = "";
+    string delimiter = ",";
+
+    // Fetch name
+    name = msg.substr(0, msg.find(delimiter));
+    valid = name != "" ? true : false;
+    
+    if (valid)
+    {
+        User user = this->getUser(name);
+
+        if (user.getName() == "")
+        {
+            valid = false;
+        }
+        else 
+        {
+            group.addUser(user);
+
+        }
+    }
+
+    // Return whether user was created or not
+    return valid;
+}
+
+void Server::handleRequest( string &data, string &msg )
+{
+    // Request class type from message
+    stringstream buffer;
+    string classType = this->processClassType(msg);
+
+    // Request rest of message depending on class type
+    if (classType == "Group") 
+    {
+        bool valid = this->processGroupData(data, msg);
+    }
+    else if (classType == "User")
+    {
+        // Request and create user if possible
+        bool valid = this->addNewUser(msg);
+
+        // If valid, return existing groups titles
+        if (valid) 
+        {
+            vector<Group> groups = this->getGroups();
+            for (int i = 0; i < groups.size(); i++) 
+            {
+                // Append group
+                buffer << "Group:" << groups[i].getTitle() << "/";
+            }
+
+            // Save buffer in data
+            data = buffer.str();
+        }
+        else 
+        {
+            data = "Retry";
+        }     
+    }
+    else 
+    {
+        data = "Retry";
+    }
+}
+
+//////////////////////
+//      MAIN        //
+//////////////////////
+
+// Server side TCP socket
+int main(int argc, char *argv[])
+{
+    // Compile: cd ../lib; g++ -c *.cpp; cd ../server
+    // Compile: g++ -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o
+    // Input: ./server 12345 (Port)
+    // Terminate: exit
+
+    // Check provided arguments
+    if(argc != 2)
+    {
+        cerr << "Usage: port" << endl;
+        cerr << "Example: ./server 12345" << endl;
+        exit(0);
+    }
+
+    // Start server
+    Server server = Server();
+
+    // Set socket variables
+    char message[1500];
+    int serverSd, clientSd;
+    string data;
+
+    // Start connection
+    server.startConnection(serverSd, clientSd, atoi(argv[1]));
+
+    // Send and receive data
     while(1)
     {
-        // Receive a message from the client (listen)
-        cout << "Client: ";
-
-        memset(&msg, 0, sizeof(msg)); // Clear the buffer
-        bytesRead += recv(newSd, (char*)&msg, sizeof(msg), 0);
+        /////////////////////
+        // Receive message //
+        /////////////////////
+        
+        memset(&message, 0, sizeof(message)); // Clear the buffer
+        recv(clientSd, (char*)&message, sizeof(message), 0);
 
         // End connection: client
-        if(!strcmp(msg, "exit"))
+        if(!strcmp(message, "exit"))
         {
-            cout << "Client has quit the session" << endl;
+            cout << "Client: Session quit" << endl;
             break;
+        }
+        // Print message
+        else 
+        {
+            cout << "Client: " << message << endl;
         }
 
         /////////////////////
         // Object handling //
         /////////////////////
 
-        // Parse class type from message
-        stringstream buffer;
-        string data;
-        string msgString = msg;
-        string classType = server.parseType(msgString);
-
-        // TODO: Create objects
-        if (classType == "Group") 
-        {
-            bool valid = server.parseMessage(msgString);
-
-            // If correct, return valid
-            if (valid) 
-            {
-                data = "Valid";
-            }
-        }
-        else if (classType == "User")
-        {
-            // Parse and create user if possible
-            bool valid = server.parseNewUser(msgString);
-
-            // If valid, return existing groups titles
-            if (valid) 
-            {
-                vector<Group> groups = server.getGroups();
-                for (int i = 0; i < groups.size(); i++) 
-                {
-                    // Append group
-                    buffer << groups[i];
-                }
-
-                // Save buffer in data
-                data = buffer.str();
-            }     
-        }
-        else 
-        {
-            data = "Continue";
-        }
-
-        /////////////////////
-        //  End of handler //
-        /////////////////////
-
-        // Print client message
-        cout << msg << endl;
+        string msg = message;
+        server.handleRequest(data, msg);
         cout << "Server: " << data << endl;
 
-        memset(&msg, 0, sizeof(msg)); // Clear the buffer
-        strcpy(msg, data.c_str());
+        //////////////////////
+        //   Send message   //
+        //////////////////////
+
+        memset(&message, 0, sizeof(message));
+        strcpy(message, data.c_str());
+        send(clientSd, (char*)&message, strlen(message), 0);
 
         // End connection: server
         if(data == "exit")
         {
-            // Send to the client that server has closed the connection
-            send(newSd, (char*)&msg, strlen(msg), 0);
             break;
         }
-
-        // Send the message to client
-        bytesWritten += send(newSd, (char*)&msg, strlen(msg), 0);
     }
 
-    // Close the socket descriptors after we're all done
-    gettimeofday(&end1, NULL);
-    close(newSd);
-    close(serverSd);
+    // End connection
+    server.endConnection(serverSd, clientSd);
 
     return 0;   
 }
