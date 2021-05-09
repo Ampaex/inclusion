@@ -1,31 +1,44 @@
 #include "message.h"
-#include <iostream>
 
-using namespace std;
+//////////////////////
+//      MESSAGE     //
+//////////////////////
 
 // Constructor
 
-Message::Message( int group, string message, string user )
+Message::Message( string message, string language, User user )
 {
   this->epoch = time(nullptr);
-  this->groupID = group;
-  this->message = message;
-  this->userID = user;
+  this->language = language;
+  this->message[language] = message;
+  this->user = user;
 }
 
-// Setters
+// Operators
 
-void Message::setMessage( string message )
+ostream& operator<<(ostream& os, const Message& message)
 {
-  this->message = message;
+    // Print language
+    os << "Message" << ':';
+
+    // Print messages
+    for(map<string, string>::const_iterator it = message.message.begin(); it != message.message.end(); ++it) {
+      os << it->first << "," << it->second << "/";
+    }
+
+    // Print user
+    os << message.user;
+
+    return os;
 }
 
-// Sample:
+//////////////////////
+//      MAIN        //
+//////////////////////
 
-int main( int argc, char *argv[], char *envp[] )
-{
-    Message m = Message(1,"Hola","Juan");
-    cout << m.getMessage() << endl;
-    cout << m.getEpoch();
-
-}
+// int main( int argc, char *argv[], char *envp[] )
+// {
+//     Message m = Message(1,"Hola","es_ES","Juan");
+//     cout << m.getText("es_ES") << endl;
+//     cout << m.getEpoch();
+// }

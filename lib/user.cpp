@@ -1,34 +1,44 @@
 #include "user.h"
-#include <iostream>
 
-using namespace std;
+/////////////////////
+//      USER       //
+/////////////////////
 
 // Constructor
 
-User::User( string language, string user )
+User::User( string name, string language )
 {
-  this->languageID = language;
-  this->userID = user;
+  this->name = name;
+  this->language = language;
 }
 
 // Setters
 
 void User::setLanguage( string language )
 {
-  this->languageID = language;
+  this->language = language;
 }
 
-void User::setUser( string user )
+void User::setName( string name )
 {
-  this->userID = user;
+  this->name = name;
 }
 
-// Sample:
+// Operators
 
-int main( int argc, char *argv[], char *envp[] )
+ostream& operator<<(ostream& os, const User& user)
 {
-    User u = User("ES","Juan");
-    cout << u.getUser() << endl;
-    cout << u.getLanguage();
-
+    os << "User" << ':' << user.name << ',' << user.language << '/';
+    return os;
 }
+
+//////////////////////
+//      MAIN        //
+//////////////////////
+
+// int main( int argc, char *argv[], char *envp[] )
+// {
+//     User u = User("ES","Juan");
+//     cout << u.getName() << endl;
+//     cout << u.getLanguage();
+// }

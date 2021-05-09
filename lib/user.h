@@ -1,31 +1,38 @@
 #ifndef USER_H
 #define USER_H
 
+#include <iostream>
 #include <string>
+
+using namespace std;
 
 class User
 {
     private:
 
         // Attributes
-        std::string languageID;
-        std::string userID;
+        string language;
+        string name;
 
     public:
 
         // Constructor
-        User( std::string language, std::string user );
+        User() { language = ""; name = ""; };
+        User( string user, string language );
 
         // Getters
-        std::string getLanguage() { return languageID; }
-        std::string getUser() { return userID; }
+        string getLanguage() { return language; }
+        string getName() { return name; }
 
         // Setters
-        void setLanguage( std::string language );
-        void setUser( std::string user );
+        void setLanguage( string language );
+        void setName( string name );
 
         // Methods
 
-    };
+        // Operators
+        friend ostream& operator<<(ostream& os, const User& user);
+};
+
 
 #endif // USER_H
