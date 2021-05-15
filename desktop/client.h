@@ -33,6 +33,7 @@ class Client
     public:
 
         // Attributes
+        int clientSd;
         User user;
         Group group;
 
@@ -48,10 +49,11 @@ class Client
         bool removeGroup( Group group );
 
         // Socket: Connection
-        void startConnection(int &clientSd, char *ip, int port);
+        void startConnection(char *ip, int port);
+        void listenConnection();
         void receiveAnswer( string &msg );
         void sendRequest( string &data );
-        void endConnection(int &clientSd);
+        void endConnection();
 }; 
 
 #endif // CLIENT_H

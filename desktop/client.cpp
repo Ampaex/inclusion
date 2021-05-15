@@ -68,7 +68,7 @@ bool Client::removeGroup( Group group )
 
 // Socket: Connection
 
-void Client::startConnection(int &clientSd, char *ip, int port)
+void Client::startConnection(char *ip, int port)
 {     
     // Socket and connection tools 
     struct hostent* host = gethostbyname(ip); 
@@ -77,12 +77,85 @@ void Client::startConnection(int &clientSd, char *ip, int port)
     clientAddr.sin_family = AF_INET; 
     clientAddr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
     clientAddr.sin_port = htons(port);
-    clientSd = socket(AF_INET, SOCK_STREAM, 0);
+    this->clientSd = socket(AF_INET, SOCK_STREAM, 0);
 
     // Try to connect
-    int status = connect(clientSd, (sockaddr*) &clientAddr, sizeof(clientAddr));
-    if(status < 0)  { cout << "Error connecting to socket!" << endl; exit(0); }
-    else            { cout << "Connected to the server!" << endl; }
+    int status = connect(this->clientSd, (sockaddr*) &clientAddr, sizeof(clientAddr));
+    if(status < 0)  
+    { 
+        cout << "Error connecting to socket!" << endl; exit(0); 
+    }
+    else            
+    { 
+        cout << "Connected to the server!" << endl; 
+        this->listenConnection();
+    }
+}
+
+void Client::listenConnection() {
+
+    // Set socket variables
+    char message[1500];
+    string data;
+    
+    // Send and receive data
+    while(1)
+    {
+        /////////////////////
+        // Object handling //
+        /////////////////////
+
+        cout << "Client: "; 
+        getline(cin, data); 
+        this->sendRequest(data); // TODO: Change to suit Qt requests
+
+        //////////////////////
+        //   Send message   //
+        //////////////////////
+
+        memset(&message, 0, sizeof(message));
+        strcpy(message, data.c_str());
+        send(this->clientSd, (char*)&message, strlen(message), 0);
+
+         // End connection: client
+        if(data == "exit")
+        {
+            break;
+        }
+        // Wait for response
+        else 
+        {
+            // cout << "Awaiting server response..." << endl;
+        }    
+
+        /////////////////////
+        // Receive message //
+        /////////////////////
+
+        memset(&message, 0, sizeof(message));
+        recv(this->clientSd, (char*)&message, sizeof(message), 0);
+
+        // End connection: server
+        if(!strcmp(message, "exit"))
+        {
+            cout << "Server: Session quit" << endl;
+            break;
+        }
+        // Print message
+        else 
+        {
+            cout << "Server: " << message << endl;
+            string msg = message;
+            this->receiveAnswer(msg);
+        }
+
+        cout << "---" << endl;
+        cout << this->user << endl;
+        cout << this->group << endl;
+        cout << "---" << endl;
+    }
+
+    this->endConnection();
 }
 
 void Client::receiveAnswer( string &msg )
@@ -298,10 +371,10 @@ void Client::sendRequest( string &data )
     }
 }
 
-void Client::endConnection(int &clientSd)
+void Client::endConnection()
 {     
     // Close the socket descriptors after we're all done
-    close(clientSd);
+    close(this->clientSd);
 }
 
 //////////////////////
@@ -320,74 +393,7 @@ int main(int argc, char *argv[])
     
     // Start client
     Client client = Client();
-
-    // Set socket variables
-    char message[1500];
-    int clientSd;
-    string data;
-
-    // Start connection
-    client.startConnection(clientSd, argv[1], atoi(argv[2]));
-
-    // Send and receive data
-    while(1)
-    {
-        /////////////////////
-        // Object handling //
-        /////////////////////
-
-        cout << "Client: "; 
-        getline(cin, data); 
-        client.sendRequest(data); // TODO: Change to suit Qt requests
-
-        //////////////////////
-        //   Send message   //
-        //////////////////////
-
-        memset(&message, 0, sizeof(message));
-        strcpy(message, data.c_str());
-        send(clientSd, (char*)&message, strlen(message), 0);
-
-         // End connection: client
-        if(data == "exit")
-        {
-            break;
-        }
-        // Wait for response
-        else 
-        {
-            // cout << "Awaiting server response..." << endl;
-        }    
-
-        /////////////////////
-        // Receive message //
-        /////////////////////
-
-        memset(&message, 0, sizeof(message));
-        recv(clientSd, (char*)&message, sizeof(message), 0);
-
-        // End connection: server
-        if(!strcmp(message, "exit"))
-        {
-            cout << "Server: Session quit" << endl;
-            break;
-        }
-        // Print message
-        else 
-        {
-            cout << "Server: " << message << endl;
-            string msg = message;
-            client.receiveAnswer(msg);
-        }
-
-        cout << "---" << endl;
-        cout << client.user << endl;
-        cout << client.group << endl;
-        cout << "---" << endl;
-    }
-
-    // Close the socket descriptors after we're all done
-    client.endConnection(clientSd);
+    client.startConnection(argv[1], atoi(argv[2]));
 
     return 0;    
 }
