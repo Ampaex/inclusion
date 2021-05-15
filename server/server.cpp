@@ -1,5 +1,5 @@
 // Compile: cd ../lib; g++ -c *.cpp; cd ../server
-// Compile: g++ -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o
+// Compile: g++ -pthread -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o
 // Input: ./server 12345 (Port)
 // Terminate: exit
 
@@ -13,6 +13,8 @@
 
 Server::Server()
 {
+    this->currentConnections = 0;
+    this->maxConnections = 5;
     addGroup(Group("Group 1"));
     addGroup(Group("Group 2"));
     addGroup(Group("Group 3"));
@@ -159,7 +161,7 @@ bool Server::removeUser( User user )
 
 // Socket: connection
 
-void Server::startConnection( int &serverSd, int &clientSd, int port )
+void Server::startConnection( int port )
 {
     // Socket and connection tools 
     sockaddr_in servAddr;
@@ -170,16 +172,30 @@ void Server::startConnection( int &serverSd, int &clientSd, int port )
  
     // Open stream oriented socket with internet address
     // Keep track of the socket descriptor
-    serverSd = socket(AF_INET, SOCK_STREAM, 0);
+    this->serverSd = socket(AF_INET, SOCK_STREAM, 0);
     if(serverSd < 0) { cerr << "Error establishing the server socket" << endl; exit(0); }
 
     // Bind the socket to its local address
-    int bindStatus = bind(serverSd, (struct sockaddr*) &servAddr, sizeof(servAddr));
+    int bindStatus = bind(this->serverSd, (struct sockaddr*) &servAddr, sizeof(servAddr));
     if(bindStatus < 0) { cerr << "Error binding socket to local address" << endl; exit(0); }
     else               { cout << "Waiting for a client to connect..." << endl; }
 
     // Listen for up to 5 requests at a time
-    listen(serverSd, 5);
+    listen(this->serverSd, this->maxConnections);
+
+    // Receive connections
+    vector<std::thread> threads;
+
+    for ( int i = 0; i < this->maxConnections; i++ ) {
+        threads.emplace_back(std::thread(&Server::receiveConnection, this));
+    }
+
+    for ( int i = 0; i < this->maxConnections; i++ ) {
+        threads[i].join();
+    }
+}
+
+void Server::receiveConnection() {
 
     // Receive a request from client using accept
     // We need a new address to connect with the client
@@ -188,13 +204,85 @@ void Server::startConnection( int &serverSd, int &clientSd, int port )
 
     // Accept, create a new socket descriptor to 
     // handle the new connection with client
-    clientSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
-    if(clientSd < 0) { cerr << "Error accepting request from client!" << endl; exit(1); }
-    else             { cout << "Connected with client!" << endl; }
+    this->clientSd = accept(this->serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
+    if(this->clientSd < 0)  
+    { 
+        cerr << "Error accepting request from client!" << endl; exit(1); 
+    }
+    else                    
+    { 
+        cout << "Connected with client " << (this->clientSd + 1) % 5 << "!" << endl; 
+        this->currentConnections++;
+        this->listenConnection(this->clientSd);
+    }
 }
 
 // TODO: Threads for multiple clients
-void Server::receiveConnection() {};
+void Server::listenConnection( int clientSd ) {
+
+    // Set socket variables
+    char message[1500];
+    string data;
+
+    // Send and receive data
+    while(1)
+    {
+        /////////////////////
+        // Receive message //
+        /////////////////////
+        
+        memset(&message, 0, sizeof(message)); // Clear the buffer
+        recv(clientSd, (char*)&message, sizeof(message), 0);
+
+        // End connection: client
+        if(!strcmp(message, "exit"))
+        {
+            cout << "Client " << (clientSd + 1) % 5 << ": Session quit" << endl;
+            this->currentConnections--;
+            break;
+        }
+
+        // Print message
+        else 
+        {
+            cout << "Client: " << message << endl;
+        }
+
+        //////////////////////
+        // Request handling //
+        //////////////////////
+
+        string msg = message;
+        this->receiveRequest(data, msg);
+        cout << "Server: " << data << endl;
+
+        //////////////////////
+        //   Send message   //
+        //////////////////////
+
+        // REMOVE 
+        cout << "---" << endl;
+        for (int i = 0; i < this->getGroups().size(); i++)
+            cout << this->getGroups()[i] << endl;
+        cout << "---" << endl;
+        // REMOVE
+
+        memset(&message, 0, sizeof(message));
+        strcpy(message, data.c_str());
+        send(clientSd, (char*)&message, strlen(message), 0);
+
+        // End connection: server
+        if(data == "exit")
+        {
+            break;
+        }
+    }
+
+    if (this->currentConnections <= 0) 
+    {
+        this->endConnection();
+    }
+};
 
 void Server::receiveRequest( string &data, string &msg )
 {
@@ -235,11 +323,12 @@ void Server::receiveRequest( string &data, string &msg )
     }
 }
 
-void Server::endConnection( int &serverSd, int &clientSd )
+void Server::endConnection()
 {     
     // Close the socket descriptors after we're all done
     close(clientSd);
     close(serverSd);
+    exit(0);
 }
 
 // Socket: data management
@@ -423,9 +512,9 @@ bool Server::receivedGroupRequest( string &msg, Group &group )
     return valid;
 }
 
-//////////////////////
-//      MAIN        //
-//////////////////////
+////////////////////
+//      MAIN      //
+////////////////////
 
 // Server side TCP socket
 int main(int argc, char *argv[])
@@ -440,69 +529,5 @@ int main(int argc, char *argv[])
 
     // Start server
     Server server = Server();
-
-    // Set socket variables
-    char message[1500];
-    int serverSd, clientSd;
-    string data;
-
-    // Start connection
-    server.startConnection(serverSd, clientSd, atoi(argv[1]));
-
-    // Send and receive data
-    while(1)
-    {
-        /////////////////////
-        // Receive message //
-        /////////////////////
-        
-        memset(&message, 0, sizeof(message)); // Clear the buffer
-        recv(clientSd, (char*)&message, sizeof(message), 0);
-
-        // End connection: client
-        if(!strcmp(message, "exit"))
-        {
-            cout << "Client: Session quit" << endl;
-            break;
-        }
-        // Print message
-        else 
-        {
-            cout << "Client: " << message << endl;
-        }
-
-        //////////////////////
-        // Request handling //
-        //////////////////////
-
-        string msg = message;
-        server.receiveRequest(data, msg);
-        cout << "Server: " << data << endl;
-
-        //////////////////////
-        //   Send message   //
-        //////////////////////
-
-        // REMOVE 
-        cout << "---" << endl;
-        for (int i = 0; i < server.getGroups().size(); i++)
-            cout << server.getGroups()[i] << endl;
-        cout << "---" << endl;
-        // REMOVE
-
-        memset(&message, 0, sizeof(message));
-        strcpy(message, data.c_str());
-        send(clientSd, (char*)&message, strlen(message), 0);
-
-        // End connection: server
-        if(data == "exit")
-        {
-            break;
-        }
-    }
-
-    // End connection
-    server.endConnection(serverSd, clientSd);
-
-    return 0;   
+    server.startConnection(atoi(argv[1]));
 }

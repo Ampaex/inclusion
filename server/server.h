@@ -9,7 +9,9 @@
 #include <sstream>
 #include <map>
 #include <string>
+#include <thread>
 #include <tuple> 
+#include <pthread.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -36,6 +38,12 @@ class Server
 
     public:
 
+        // Attributes
+        int clientSd;
+        int serverSd;
+        int currentConnections;
+        int maxConnections;
+
         // Constructor
         Server();
         ~Server() {}
@@ -56,10 +64,11 @@ class Server
         bool removeUser( User user );
 
         // Socket: Connection
-        void startConnection( int &serverSd, int &clientSd, int port );
+        void startConnection( int port );
+        void listenConnection( int client );
         void receiveConnection();
         void receiveRequest( string &data,  string &message );
-        void endConnection( int &serverSd, int &clientSd );
+        void endConnection();
 
         // Socket: Data management
         string processClassType( string &msg );
