@@ -1,5 +1,7 @@
+// cd ../lib; g++ -c *.cpp; cd ../desktop/; g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0; ./client 127.0.0.1 12345
+
 // Compile: cd ../lib; g++ -c *.cpp; cd ../server
-// Compile: g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o
+// Compile: g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0
 // Input: ./client 127.0.0.1 12345 (IP + Port)
 // Terminate: exit
 
@@ -279,7 +281,7 @@ void Client::receiveAnswer( string &msg )
                 if (valid)
                 {
                     // Add messages to group
-                    Message msg = Message(messageText, messageLanguage, User(userName, userLanguage));
+                    Message msg = Message(messageText, messageLanguage, User(userName, userLanguage), false);
 
                     // Loop through translated messages
                     for(map<string, string>::iterator it = translatedMessages.begin(); it != translatedMessages.end(); ++it) {
@@ -320,7 +322,7 @@ void Client::sendRequest( string &data )
     if (data == "user") 
     {   
         this->user.setName("Example"); // TODO: Add via Qt
-        this->user.setLanguage("en-UK"); // TODO: Add via Qt
+        this->user.setLanguage("en"); // TODO: Add via Qt
         buffer << user;
         data = buffer.str();
     }
@@ -350,7 +352,7 @@ void Client::sendRequest( string &data )
         // TODO: Change message by the one indicated by Qt
         if (user.getName() != "" && group.getTitle() != "")
         {
-            Message message = Message("Example", "es-ES", user); // TODO: Change
+            Message message = Message("Ejemplo", "es", user, false); // TODO: Change
             buffer << "Group:" << group.getTitle() << "/" << message; 
             data = buffer.str();
         }
