@@ -1,7 +1,10 @@
-// Compile: cd ../lib; g++ -c *.cpp; cd ../server
-// Compile: g++ -pthread -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o
+// cd ../lib; g++ -c *.cpp; cd ../server; g++ -pthread -lchilkat-9.5.0 -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0; ./server 12345
+
+// Compile: cd ../lib; g++ -c *.cpp -lchilkat-9.5.0; cd ../server
+// Compile: g++ -pthread -o server server.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0
 // Input: ./server 12345 (Port)
 // Terminate: exit
+
 
 #include "server.h"
 
@@ -474,7 +477,7 @@ bool Server::receivedMessage( string &msg, Group &group )
     // Create message and add it to the group
     if (valid)
     {
-        group.addMessage( Message(messageText, messageLanguage, this->getUser(userName)) );
+        group.addMessage( Message(messageText, messageLanguage, this->getUser(userName), true) );
         this->setGroup( group );
     }
 
