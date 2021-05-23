@@ -9,17 +9,20 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    alertwindow.cpp \
     form.cpp \
     main.cpp \
     mainwindow.cpp \
     $$OUT_PWD/../../lib/*.cpp
 
 HEADERS += \
+    alertwindow.h \
     form.h \
     mainwindow.h \
     $$OUT_PWD/../../lib/*.h
 
 FORMS += \
+    alertwindow.ui \
     form.ui \
     mainwindow.ui
 
