@@ -51,8 +51,7 @@ void Form::on_loginButton_clicked()
             mainwindow.client = &(this->client);
 
             //Sets client username and language
-            client.setLanguage(language_s);
-            client.setUserName(username_s);
+            client.setUser(User(username_s,language_s));
 
             //Fill groups box
             for(string elem:client.groups)

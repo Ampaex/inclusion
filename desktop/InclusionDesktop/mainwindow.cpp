@@ -40,7 +40,7 @@ void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
             QString us_qs = QString(us.getName().c_str());
             ui->listWidget_1->addItem(us_qs);
         }
-        ui->tabWidget->setCurrentIndex(0);
+        ui->tabWidget->setCurrentIndex(1);
     }
     timer->start(2000);
 }
@@ -104,10 +104,9 @@ void MainWindow::on_pushButton_clicked()
     if(!client->group.getMessages().empty())
     {
         ui->listWidget->clear();
-        cout << "ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
         for(Message mess: client->group.getMessages())
         {
-            cout << "message" << mess.getText("es") << endl;
+            cout << "message:" << mess.getText(client->user.getLanguage()) << endl;
             QString mess_qt = QString(mess.getText(client->user.getLanguage()).c_str());
             ui->listWidget->addItem(mess_qt);
         }
