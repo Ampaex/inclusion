@@ -308,7 +308,7 @@ void Client::receiveAnswer( string &msg )
 
                     // Loop through translated messages
                     for(map<string, string>::iterator it = translatedMessages.begin(); it != translatedMessages.end(); ++it) {
-                        message.setMessage(it->first, it->second);
+                        message.setMessage(it->second, it->first);
                     }
 
                     // Set values into group

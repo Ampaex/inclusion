@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include <client.h>
 #include <thread>
+#include <QTranslator>
 
 namespace Ui {
 class Form;
@@ -22,7 +23,6 @@ public:
 
 private slots:
     void on_loginButton_clicked();
-    void on_comboBox_activated(const QString &arg1);
 
 private:
     Ui::Form *ui;

@@ -1,6 +1,8 @@
 #include "form.h"
 #include "ui_form.h"
 #include "mainwindow.h"
+#include "alertwindow.h"
+#include <QMessageBox>
 
 Form::Form(QWidget *parent) :
     QWidget(parent),
@@ -65,10 +67,11 @@ void Form::on_loginButton_clicked()
             mainwindow.show();
 
         }
+        else
+        {
+            QMessageBox alert;
+            alert.setText(tr("El usuario ya existe, escoja otro"));
+            alert.exec();
+        }
     }
-}
-
-void Form::on_comboBox_activated(const QString &arg1)
-{
-
 }

@@ -74,9 +74,15 @@ void MainWindow::updateInterface()
         ui->listWidget->clear();
         for(Message mess: client->group.getMessages())
         {
-            QString mess_qt = QString(mess.getText(client->user.getLanguage()).c_str());
+            QString mess_qt = QString(mess.getUser().getName().c_str()) + QString(" > ");
+            mess_qt += QString(mess.getText(client->user.getLanguage()).c_str());
+            cout << "******captado: " << mess.getText(client->user.getLanguage()).c_str();
             ui->listWidget->addItem(mess_qt);
         }
+    }
+    else
+    {
+        ui->listWidget->clear();
     }
 
 }
@@ -106,10 +112,15 @@ void MainWindow::on_pushButton_clicked()
         ui->listWidget->clear();
         for(Message mess: client->group.getMessages())
         {
-            cout << "message:" << mess.getText(client->user.getLanguage()) << endl;
-            QString mess_qt = QString(mess.getText(client->user.getLanguage()).c_str());
+            QString mess_qt;
+            mess_qt += QString(mess.getUser().getName().c_str()) + QString(" > ");
+            mess_qt += QString(mess.getText(client->user.getLanguage()).c_str());
             ui->listWidget->addItem(mess_qt);
         }
+    }
+    else
+    {
+        ui->listWidget->clear();
     }
 
 }
