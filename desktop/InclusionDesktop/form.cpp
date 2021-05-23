@@ -19,7 +19,20 @@ Form::~Form()
 void Form::on_loginButton_clicked()
 {
     username = ui->userName->text();
-    language = ui->comboBox->itemText(ui->comboBox->currentIndex());
+    switch(ui->comboBox->currentIndex())
+    {
+        case 0:
+            language = QString("es");
+        break;
+
+        case 1:
+            language = QString("en");
+        break;
+
+        case 3:
+            language = QString("zh");
+        break;
+    }
     string username_s = username.toStdString();
     string language_s = language.toStdString();
     if(!username.isEmpty())

@@ -52,12 +52,6 @@ void Message::translateMessage(string newLanguage)
   // Response is valid
   else {
       json.Load(response->bodyStr());
-      cout << "toTranslate:";
-      for(string st: this->toTranslate)
-      {
-          cout << st << endl;
-      }
-      cout << "newMessage:" << json.stringOf("data.translations[0].translatedText");
       string newMessage = json.stringOf("data.translations[0].translatedText");
       this->setMessage(newMessage, newLanguage);
       delete response;

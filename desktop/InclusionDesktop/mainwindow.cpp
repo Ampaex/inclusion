@@ -86,31 +86,28 @@ void MainWindow::on_pushButton_clicked()
     QString inputText = ui->textEdit->toPlainText(); //Get text from input box
     string inputText_s = inputText.toStdString();
     on_clearButton_clicked(); //Clear input box
-    cout << "Input:" << inputText_s << endl ;
 
     stringstream datasrtm;
-    Group requestedGroupMessage = Group(client->group.getTitle());
-    string lang = this->client->user.getLanguage();
-    User usu = this->client->user ;
+    Message msg = Message(inputText_s,this->client->user.getLanguage(),this->client->user,true);
 
-    Message msg = Message(inputText_s,lang,usu,true);
 
-    requestedGroupMessage.addMessage(msg);
+    datasrtm << "Group:" << client->group.getTitle() << "/" << msg; //Create a new group to send
 
-    cout << "hasta aqui2" << endl;
-    datasrtm << requestedGroupMessage; //Create a new group to send
     cout << "Message sent: " << datasrtm.str() <<endl;
     client->data = datasrtm.str();  //Send requested group
     //Wait for response from server
     while(!client->responseAvailable){};
     client->responseAvailable = false;
 
+
     //Update messages
     if(!client->group.getMessages().empty())
     {
         ui->listWidget->clear();
+        cout << "ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<endl;
         for(Message mess: client->group.getMessages())
         {
+            cout << "message" << mess.getText("es") << endl;
             QString mess_qt = QString(mess.getText(client->user.getLanguage()).c_str());
             ui->listWidget->addItem(mess_qt);
         }
