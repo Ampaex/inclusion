@@ -1,4 +1,5 @@
 // cd ../lib; g++ -c *.cpp; cd ../desktop/; g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0; ./client 127.0.0.1 12345
+// cd ../lib; g++ -c *.cpp; cd ../desktop/; g++ -o client client.cpp message.o user.o group.o -lchilkat-9.5.0; ./client 127.0.0.1 12345
 
 // Compile: cd ../lib; g++ -c *.cpp; cd ../server
 // Compile: g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0
@@ -25,9 +26,10 @@ void Client::setGroup( Group group )
     }
 }
 
-void Client::setUserName( string &username)
+void Client::setUser( User newUser )
 {
-    this->user.setName(username);
+    this->user.setName(newUser.getName());
+    this->user.setLanguage(newUser.getLanguage());
 }
 
 void Client::setLanguage( string &lang )
@@ -149,7 +151,7 @@ void Client::listenConnection() {
             data = ""; //Empty the data
 
             /////////////////////
-            // Receive message //buffer
+            // Receive message //
             /////////////////////
 
             memset(&message, 0, sizeof(message));
@@ -276,17 +278,17 @@ void Client::receiveAnswer( string &msg )
             else if (className == "Message")
             {
                 delimiter = ",";
-                messageLanguage = msg.substr(0, msg.find(delimiter));
+                string language = msg.substr(0, msg.find(delimiter));
                 msg.erase(0, msg.find(delimiter) + delimiter.length());
                 delimiter = "/";
-                messageText = msg.substr(0, msg.find(delimiter));
+                string text = msg.substr(0, msg.find(delimiter));
                 msg.erase(0, msg.find(delimiter) + delimiter.length());
-                valid = messageLanguage != "" && messageText != "" ? true : false; 
+                valid = language != "" && text != "" ? true : false; 
 
                 if (valid)
                 {
                     // Add message to translated messages
-                    translatedMessages[messageLanguage] = messageLanguage;                    
+                    translatedMessages[language] = text;                    
                 }
             }
             else if (className == "User")
@@ -298,18 +300,19 @@ void Client::receiveAnswer( string &msg )
                 userLanguage = msg.substr(0, msg.find(delimiter));
                 msg.erase(0, msg.find(delimiter) + delimiter.length());
                 valid = userName != "" && userLanguage != "" ? true : false;
+
                 if (valid)
                 {
                     // Add messages to group
-                    Message msg = Message(messageText, messageLanguage, User(userName, userLanguage), false);
+                    Message message = Message(messageText, messageLanguage, User(userName, userLanguage), false);
 
                     // Loop through translated messages
                     for(map<string, string>::iterator it = translatedMessages.begin(); it != translatedMessages.end(); ++it) {
-                        msg.setMessage(it->first, it->second);
+                        message.setMessage(it->first, it->second);
                     }
 
                     // Set values into group
-                    newGroup.addMessage(msg);
+                    newGroup.addMessage(message);
                 }
 
                 // Reset values
@@ -322,7 +325,13 @@ void Client::receiveAnswer( string &msg )
             // Fetch class
             delimiter = ":";
             className = msg.substr(0, msg.find(delimiter));
-            msg.erase(0, msg.find(delimiter) + delimiter.length());
+            if (className != "Message" && className != "User" && msg.length() > 0) {
+                className = "Message";
+                delimiter = "/";
+            }
+            else {
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+            }
         }
 
         if (valid)
@@ -424,4 +433,3 @@ string Client::processClassType( string &msg )
     // Return type
     return classType;
 }
-

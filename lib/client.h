@@ -46,7 +46,7 @@ class Client
 
         // Setters
         void setGroup( Group group );
-        void setUserName( string &username);
+        void setUser( User newUser );
         void setLanguage( string &lang );
 
         // Methods
