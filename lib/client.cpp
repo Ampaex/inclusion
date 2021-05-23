@@ -298,7 +298,6 @@ void Client::receiveAnswer( string &msg )
                 userLanguage = msg.substr(0, msg.find(delimiter));
                 msg.erase(0, msg.find(delimiter) + delimiter.length());
                 valid = userName != "" && userLanguage != "" ? true : false;
-
                 if (valid)
                 {
                     // Add messages to group

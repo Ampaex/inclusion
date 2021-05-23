@@ -88,18 +88,18 @@ void MainWindow::on_pushButton_clicked()
     on_clearButton_clicked(); //Clear input box
 
     stringstream datasrtm;
-    Message msg = Message(inputText_s,this->client->user.getLanguage(),this->client->user,true);
+    Message msg = Message(inputText_s,this->client->user.getLanguage(),this->client->user,false);
 
 
     datasrtm << "Group:" << client->group.getTitle() << "/" << msg; //Create a new group to send
 
-    cout << "Message sent: " << datasrtm.str() <<endl;
     client->data = datasrtm.str();  //Send requested group
     //Wait for response from server
     while(!client->responseAvailable){};
     client->responseAvailable = false;
 
 
+    cout <<endl<< "------Grupo: " << client->group <<endl;
     //Update messages
     if(!client->group.getMessages().empty())
     {
