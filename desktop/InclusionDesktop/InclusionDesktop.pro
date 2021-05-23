@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     form.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    $$OUT_PWD/../../lib/*.cpp
 
 HEADERS += \
     form.h \
-    mainwindow.h
+    mainwindow.h \
+    $$OUT_PWD/../../lib/*.h
 
 FORMS += \
     form.ui \
@@ -28,3 +30,8 @@ TRANSLATIONS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+unix|win32: LIBS += -lchilkat-9.5.0
+INCLUDEPATH += /usr/lib/chilkat-9.5.0-x86_64-linux-gcc/include
+INCLUDEPATH += $$OUT_PWD/../../lib
+

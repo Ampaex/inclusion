@@ -432,11 +432,11 @@ bool Server::receivedUser( string &msg )
     delimiter = "/";
     language = msg.substr(0, msg.find(delimiter));
     valid = language != "" && valid ? true : false;
-
+    
     // Create user if possible
     if (valid) 
     {
-        this->addUser( User(name, language) );
+        valid = this->addUser( User(name, language) );
     }
 
     // Return whether user was created or not

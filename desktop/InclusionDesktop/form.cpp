@@ -7,6 +7,8 @@ Form::Form(QWidget *parent) :
     ui(new Ui::Form)
 {
     ui->setupUi(this);
+    this->client = Client();
+    this->client.startConnection((char*)"127.0.0.1",12345);
 }
 
 Form::~Form()
@@ -17,12 +19,40 @@ Form::~Form()
 void Form::on_loginButton_clicked()
 {
     username = ui->userName->text();
-    if (!username.isEmpty())
+    language = ui->comboBox->itemText(ui->comboBox->currentIndex());
+    string username_s = username.toStdString();
+    string language_s = language.toStdString();
+    if(!username.isEmpty())
     {
-        this->hide();
-        mainwindow.move(QApplication::desktop()->screen()->rect().center() - mainwindow.rect().center());
-        mainwindow.setUsername(username);
-        mainwindow.show();
+        stringstream dataStream;
+        dataStream << User(username.toStdString(), language.toStdString());
+        client.data = dataStream.str();
+
+        //Wait for response from server
+        while(!client.responseAvailable);
+        client.responseAvailable = false;
+
+        if (!client.groups.empty())
+        {
+            this->hide();
+            mainwindow.client = &(this->client);
+
+            //Sets client username and language
+            client.setLanguage(language_s);
+            client.setUserName(username_s);
+
+            //Fill groups box
+            for(string elem:client.groups)
+            {
+                QString elem_qs = QString(elem.c_str());
+                mainwindow.getGroupList()->addItem(elem_qs);
+            }
+
+            mainwindow.getLabelUsername()->setText(username);
+            mainwindow.move(QApplication::desktop()->screen()->rect().center() - mainwindow.rect().center());
+            mainwindow.show();
+
+        }
     }
 }
 

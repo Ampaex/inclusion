@@ -17,12 +17,12 @@ Message::Message( string message, string language, User user, bool translate )
     this->toTranslate.end(), 
     this->language), 
     this->toTranslate.end());
-
   // Translate the message
   for (int i = 0; i < this->toTranslate.size() && translate; i++) 
   {
     this->translateMessage(this->toTranslate[i]);
   }
+
 }
 
 // Methods
@@ -52,13 +52,19 @@ void Message::translateMessage(string newLanguage)
   // Response is valid
   else {
       json.Load(response->bodyStr());
+      cout << "toTranslate:";
+      for(string st: this->toTranslate)
+      {
+          cout << st << endl;
+      }
+      cout << "newMessage:" << json.stringOf("data.translations[0].translatedText");
       string newMessage = json.stringOf("data.translations[0].translatedText");
       this->setMessage(newMessage, newLanguage);
       delete response;
   }
 }
 
-// Operators 
+// Operators
 
 ostream& operator<<(ostream& os, const Message& message){
     // Print language

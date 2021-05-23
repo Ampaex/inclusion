@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QDesktopWidget>
 #include "mainwindow.h"
+#include <client.h>
+#include <thread>
 
 namespace Ui {
 class Form;
@@ -27,6 +29,7 @@ private:
     QString username;
     QString language;
     MainWindow mainwindow;
+    Client client;
 };
 
 #endif // FORM_H
