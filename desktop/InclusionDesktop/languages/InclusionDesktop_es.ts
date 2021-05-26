@@ -16,14 +16,18 @@
     <message>
         <location filename="../alertwindow.ui" line="82"/>
         <source>OK</source>
-        <translation>Vale</translation>
+        <translation type="unfinished">Vale</translation>
     </message>
 </context>
 <context>
     <name>Form</name>
     <message>
-        <location filename="../form.ui" line="26"/>
         <source>User login</source>
+        <translation type="vanished">Registro</translation>
+    </message>
+    <message>
+        <location filename="../form.ui" line="26"/>
+        <source>Registro</source>
         <translation>Registro</translation>
     </message>
     <message>
@@ -37,22 +41,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="160"/>
+        <location filename="../form.ui" line="159"/>
         <source>Idioma</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="170"/>
+        <location filename="../form.ui" line="169"/>
         <source>Español</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="175"/>
+        <location filename="../form.ui" line="174"/>
         <source>Inglés</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="180"/>
+        <location filename="../form.ui" line="179"/>
         <source>Chino</source>
         <translation></translation>
     </message>
@@ -82,7 +86,7 @@
     <message>
         <location filename="../mainwindow.ui" line="636"/>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="696"/>

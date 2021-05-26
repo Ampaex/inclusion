@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>User login</string>
+   <string>Registro</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -150,7 +150,6 @@ QLineEdit:focus{
    <property name="styleSheet">
     <string notr="true">#comboBox{
 	color: rgb(0, 70, 65);
-	border-radius: 5px;
 }</string>
    </property>
    <property name="locale">

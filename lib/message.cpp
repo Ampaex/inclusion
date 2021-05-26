@@ -53,8 +53,9 @@ void Message::translateMessage(string newLanguage)
   }
   // Response is valid
   else {
+      json.Clear();
+      json.put_Utf8(true);
       json.Load(response->bodyStr());
-      cout << "***BOOOODYYYSTRRRRRRRRRRRRRRRRR:" << response->bodyStr();
       string newMessage = json.stringOf("data.translations[0].translatedText");
       this->setMessage(newMessage, newLanguage);
       delete response;
