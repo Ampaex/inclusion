@@ -40,9 +40,11 @@ void Message::translateMessage(string newLanguage)
 
   // Create request and receive response
   CkHttp http;
-  http.put_AcceptCharset("");
+  http.put_AcceptCharset("utf-8");
+  http.put_Utf8(true);
   http.put_UserAgent("");
-  http.put_AllowGzip(false);
+  http.put_AllowGzip(true);
+
   CkHttpResponse *response = http.PostJson("https://translation.googleapis.com/language/translate/v2?key=AIzaSyBvGJF3P5AKmrq_b9eKmrdcqCcmr63bfi0", json.emit());
 
   // Response error
@@ -52,6 +54,7 @@ void Message::translateMessage(string newLanguage)
   // Response is valid
   else {
       json.Load(response->bodyStr());
+      cout << "***BOOOODYYYSTRRRRRRRRRRRRRRRRR:" << response->bodyStr();
       string newMessage = json.stringOf("data.translations[0].translatedText");
       this->setMessage(newMessage, newLanguage);
       delete response;

@@ -31,7 +31,7 @@ void Form::on_loginButton_clicked()
             language = QString("en");
         break;
 
-        case 3:
+        case 2:
             language = QString("zh");
         break;
     }

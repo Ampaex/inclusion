@@ -18,6 +18,8 @@ public:
     Client* client;
     QListWidget* getGroupList();
     QLabel* getLabelUsername();
+    void updateChatBox();
+    void updateUsers();
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -25,7 +27,6 @@ private slots:
     void on_clearButton_clicked();
     void on_listWidget_2_itemDoubleClicked(QListWidgetItem *item);
     void updateInterface();
-
     void on_pushButton_clicked();
 
 private:
