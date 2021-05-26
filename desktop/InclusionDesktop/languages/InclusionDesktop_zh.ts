@@ -57,12 +57,12 @@
         <translation>中文</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="77"/>
+        <location filename="../form.cpp" line="80"/>
         <source>El usuario ya existe, escoja otro</source>
         <translation>该用户名已存在，请更换</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="93"/>
+        <location filename="../form.cpp" line="96"/>
         <source>No ha sido posible cargar el idioma</source>
         <translation>语言无法加载</translation>
     </message>
@@ -85,29 +85,34 @@
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="696"/>
+        <location filename="../mainwindow.ui" line="702"/>
         <source>Grupos</source>
         <translation>群组</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="749"/>
+        <location filename="../mainwindow.ui" line="755"/>
         <source>Usuarios</source>
         <translation>用户列表</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="884"/>
+        <location filename="../mainwindow.ui" line="899"/>
         <source>Name</source>
         <translation>昵称</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="942"/>
+        <location filename="../mainwindow.ui" line="992"/>
         <source>Enviar</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="974"/>
+        <location filename="../mainwindow.ui" line="1024"/>
         <source>Borrar</source>
         <translation>清除</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="154"/>
+        <source>Escribe aquí...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

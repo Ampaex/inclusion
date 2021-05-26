@@ -16,7 +16,7 @@
     <message>
         <location filename="../alertwindow.ui" line="82"/>
         <source>OK</source>
-        <translation type="unfinished">Vale</translation>
+        <translation>Vale</translation>
     </message>
 </context>
 <context>
@@ -61,12 +61,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="77"/>
+        <location filename="../form.cpp" line="80"/>
         <source>El usuario ya existe, escoja otro</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="93"/>
+        <location filename="../form.cpp" line="96"/>
         <source>No ha sido posible cargar el idioma</source>
         <translation>No ha sido posible cargar el idioma</translation>
     </message>
@@ -89,29 +89,34 @@
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="696"/>
+        <location filename="../mainwindow.ui" line="702"/>
         <source>Grupos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="749"/>
+        <location filename="../mainwindow.ui" line="755"/>
         <source>Usuarios</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="884"/>
+        <location filename="../mainwindow.ui" line="899"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="942"/>
+        <location filename="../mainwindow.ui" line="992"/>
         <source>Enviar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="974"/>
+        <location filename="../mainwindow.ui" line="1024"/>
         <source>Borrar</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="154"/>
+        <source>Escribe aquí...</source>
+        <translation>Escribe aquí...</translation>
     </message>
 </context>
 </TS>

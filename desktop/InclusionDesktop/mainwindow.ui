@@ -653,7 +653,7 @@
            <property name="styleSheet">
             <string notr="true">QListWidget{
 	background-color: rgb(248, 255, 255);
-	border-radius: 5px;
+	border-radius: 6px;
 }</string>
            </property>
            <property name="locale">
@@ -691,7 +691,7 @@
            <property name="styleSheet">
             <string notr="true">QTabWidget{
 	background-color: rgb(248, 255, 255);
-	border-radius: 5px;
+	border-radius: 8px;
 }</string>
            </property>
            <property name="currentIndex">
@@ -780,7 +780,8 @@
                </property>
                <property name="styleSheet">
                 <string notr="true">QListWidget{
-	background-color: rgb(248, 255, 255)
+	background-color: rgb(248, 255, 255);
+	border-radius: 5px;
 }</string>
                </property>
                <property name="verticalScrollBarPolicy">

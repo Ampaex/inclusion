@@ -61,12 +61,12 @@
         <translation>Chinese</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="77"/>
+        <location filename="../form.cpp" line="80"/>
         <source>El usuario ya existe, escoja otro</source>
         <translation>The user already exists, choose another</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="93"/>
+        <location filename="../form.cpp" line="96"/>
         <source>No ha sido posible cargar el idioma</source>
         <translation>Language couldn&apos;t be loaded</translation>
     </message>
@@ -86,32 +86,37 @@
     <message>
         <location filename="../mainwindow.ui" line="636"/>
         <source>-</source>
-        <translation type="unfinished">-</translation>
+        <translation>-</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="696"/>
+        <location filename="../mainwindow.ui" line="702"/>
         <source>Grupos</source>
         <translation>Groups</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="749"/>
+        <location filename="../mainwindow.ui" line="755"/>
         <source>Usuarios</source>
         <translation>Users</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="884"/>
+        <location filename="../mainwindow.ui" line="899"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="942"/>
+        <location filename="../mainwindow.ui" line="992"/>
         <source>Enviar</source>
         <translation>Send</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="974"/>
+        <location filename="../mainwindow.ui" line="1024"/>
         <source>Borrar</source>
         <translation>Clear</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="154"/>
+        <source>Escribe aquí...</source>
+        <translation>Write here...</translation>
     </message>
 </context>
 </TS>
