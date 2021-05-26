@@ -6,65 +6,65 @@
     <message>
         <location filename="../alertwindow.ui" line="14"/>
         <source>Alert Window</source>
-        <translation>系统警告</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../alertwindow.ui" line="48"/>
         <source>This username already exists</source>
-        <translation>此用户名已存在</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../alertwindow.ui" line="82"/>
         <source>OK</source>
-        <translation>了解</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Form</name>
     <message>
         <location filename="../form.ui" line="26"/>
-        <source>User login</source>
-        <translation>用户登录</translation>
+        <source>Registro</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../form.ui" line="69"/>
         <source>Entrar</source>
-        <translation>登录</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../form.ui" line="110"/>
         <source>Escriba su apodo</source>
-        <translation>填写您的昵称</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="154"/>
+        <location filename="../form.ui" line="159"/>
         <source>Idioma</source>
-        <translation>语言</translation>
-    </message>
-    <message>
-        <location filename="../form.ui" line="164"/>
-        <source>Español</source>
-        <translation>西班牙语</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../form.ui" line="169"/>
-        <source>Inglés</source>
-        <translation>英语</translation>
+        <source>Español</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../form.ui" line="174"/>
+        <source>Inglés</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form.ui" line="179"/>
         <source>Chino</source>
-        <translation>中文</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="75"/>
+        <location filename="../form.cpp" line="77"/>
         <source>El usuario ya existe, escoja otro</source>
-        <translation>用户名已存在，请更换</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="89"/>
-        <source>No ha sido posible cargar los idiomas</source>
-        <translation>语言无法加载</translation>
+        <location filename="../form.cpp" line="93"/>
+        <source>No ha sido posible cargar el idioma</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -72,37 +72,42 @@
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>Inclusion - Chating room</source>
-        <translation>Inclusion - 聊天室</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="589"/>
+        <location filename="../mainwindow.ui" line="602"/>
         <source>Conversación actual</source>
-        <translation>当前聊天</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="626"/>
+        <location filename="../mainwindow.ui" line="636"/>
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="696"/>
         <source>Grupos</source>
-        <translation>群组</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="667"/>
+        <location filename="../mainwindow.ui" line="749"/>
         <source>Usuarios</source>
-        <translation>用户列表</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="780"/>
+        <location filename="../mainwindow.ui" line="884"/>
         <source>Name</source>
-        <translation>昵称</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="942"/>
         <source>Enviar</source>
-        <translation>发送</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="814"/>
+        <location filename="../mainwindow.ui" line="974"/>
         <source>Borrar</source>
-        <translation>清除</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
