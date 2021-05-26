@@ -112,7 +112,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="154"/>
         <source>Escribe aquí...</source>
-        <translation type="unfinished"></translation>
+        <translation>在此处输入...</translation>
     </message>
 </context>
 </TS>
