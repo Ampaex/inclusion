@@ -37,32 +37,32 @@
         <translation>Nickname</translation>
     </message>
     <message>
-        <location filename="../form.ui" line="154"/>
+        <location filename="../form.ui" line="160"/>
         <source>Idioma</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="../form.ui" line="164"/>
+        <location filename="../form.ui" line="170"/>
         <source>Español</source>
         <translation>Spanish</translation>
     </message>
     <message>
-        <location filename="../form.ui" line="169"/>
+        <location filename="../form.ui" line="175"/>
         <source>Inglés</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../form.ui" line="174"/>
+        <location filename="../form.ui" line="180"/>
         <source>Chino</source>
         <translation>Chinese</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="75"/>
+        <location filename="../form.cpp" line="77"/>
         <source>El usuario ya existe, escoja otro</source>
         <translation>The user already exists, choose another</translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="89"/>
+        <location filename="../form.cpp" line="93"/>
         <source>No ha sido posible cargar el idioma</source>
         <translation>Language couldn&apos;t be loaded</translation>
     </message>
@@ -75,32 +75,37 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="589"/>
+        <location filename="../mainwindow.ui" line="602"/>
         <source>Conversación actual</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="626"/>
+        <location filename="../mainwindow.ui" line="636"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="696"/>
         <source>Grupos</source>
         <translation>Groups</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="667"/>
+        <location filename="../mainwindow.ui" line="749"/>
         <source>Usuarios</source>
         <translation>Users</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="780"/>
+        <location filename="../mainwindow.ui" line="884"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="942"/>
         <source>Enviar</source>
         <translation>Send</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="814"/>
+        <location filename="../mainwindow.ui" line="974"/>
         <source>Borrar</source>
         <translation>Clear</translation>
     </message>

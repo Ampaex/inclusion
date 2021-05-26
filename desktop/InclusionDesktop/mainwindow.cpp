@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->groupLabel->setText("");
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateInterface()));
 }
@@ -53,7 +54,7 @@ void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
     ui->tabWidget->setCurrentIndex(1);
 
     //Refresh time
-    timer->start(2000);
+    timer->start(1000);
 }
 
 void MainWindow::updateInterface()
@@ -72,6 +73,16 @@ void MainWindow::updateInterface()
     updateUsers();
 
     updateChatBox();
+
+    //Update label that indicates in which group is the user
+    if(client->group.getTitle()!= "")
+    {
+        ui->groupLabel->setText(QString(client->group.getTitle().c_str()));
+    }
+    else
+    {
+        ui->groupLabel->setText("");
+    }
 
 }
 
@@ -107,20 +118,19 @@ void MainWindow::updateChatBox()
             QListWidgetItem* line = new QListWidgetItem();
             if(mess.getUser().getName() == client->user.getName())
             {
-                QString mess_qt = QString(mess.getUser().getName().c_str()) + QString(" > ") ;
+                QString mess_qt = QString(mess.getUser().getName().c_str()) + QString(" >   ") ;
                 mess_qt += QString(mess.getText(client->user.getLanguage()).c_str());
                 line->setText(mess_qt);
                 line->setTextAlignment(2);
             }
             else
             {
-                QString mess_qt = QString(mess.getUser().getName().c_str()) + QString(" > ") ;
+                QString mess_qt = QString(mess.getUser().getName().c_str()) + QString(" >   ") ;
                 mess_qt += QString(mess.getText(client->user.getLanguage()).c_str());
                 line->setText(mess_qt);
                 line->setTextAlignment(0);
             }
             ui->listWidget->addItem(line);
-            ui->listWidget->setAlternatingRowColors(true);
         }
     }
     else

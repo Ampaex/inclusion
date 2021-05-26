@@ -37,32 +37,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="154"/>
+        <location filename="../form.ui" line="160"/>
         <source>Idioma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="164"/>
+        <location filename="../form.ui" line="170"/>
         <source>Español</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="169"/>
+        <location filename="../form.ui" line="175"/>
         <source>Inglés</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="174"/>
+        <location filename="../form.ui" line="180"/>
         <source>Chino</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="75"/>
+        <location filename="../form.cpp" line="77"/>
         <source>El usuario ya existe, escoja otro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.cpp" line="89"/>
+        <location filename="../form.cpp" line="93"/>
         <source>No ha sido posible cargar el idioma</source>
         <translation type="unfinished"></translation>
     </message>
@@ -75,32 +75,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="589"/>
+        <location filename="../mainwindow.ui" line="602"/>
         <source>Conversación actual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="626"/>
+        <location filename="../mainwindow.ui" line="636"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="696"/>
         <source>Grupos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="667"/>
+        <location filename="../mainwindow.ui" line="749"/>
         <source>Usuarios</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="780"/>
+        <location filename="../mainwindow.ui" line="884"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="942"/>
         <source>Enviar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="814"/>
+        <location filename="../mainwindow.ui" line="974"/>
         <source>Borrar</source>
         <translation type="unfinished"></translation>
     </message>

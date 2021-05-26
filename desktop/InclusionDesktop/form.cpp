@@ -72,6 +72,8 @@ void Form::on_loginButton_clicked()
         else
         {
             QMessageBox alert;
+            QPixmap icon(app->applicationDirPath()+"/../../media/images/Alert.png");
+            alert.setIconPixmap(icon);
             alert.setText(tr("El usuario ya existe, escoja otro"));
             alert.exec();
         }
@@ -86,6 +88,8 @@ void Form::loadTranslation(QString lang)
     if(!this->trans->load(path))
     {
         QMessageBox alert;
+        QPixmap icon(app->applicationDirPath()+"/../../media/images/Alert.png");
+        alert.setIconPixmap(icon);
         alert.setText(tr("No ha sido posible cargar el idioma"));
         alert.exec();
     }

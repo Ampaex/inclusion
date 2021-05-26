@@ -17,6 +17,11 @@
    <iconset>
     <normaloff>../../media/images/ProyectoIcon.png</normaloff>../../media/images/ProyectoIcon.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{
+	background-color : rgb(231, 232, 255);
+}</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="enabled">
     <bool>true</bool>
@@ -584,19 +589,72 @@
        <item>
         <layout class="QVBoxLayout" name="msgLayout">
          <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Conversación actual</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Conversación actual</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="groupLabel">
+             <property name="font">
+              <font>
+               <family>Quicksand Medium</family>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel{
+	color: rgb(97, 161, 157)
+}</string>
+             </property>
+             <property name="lineWidth">
+              <number>1</number>
+             </property>
+             <property name="text">
+              <string>-</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QListWidget" name="listWidget">
            <property name="font">
             <font>
-             <family>Arial</family>
-             <pointsize>11</pointsize>
+             <family>Quicksand</family>
+             <pointsize>12</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QListWidget{
+	background-color: rgb(248, 255, 255);
+	border-radius: 5px;
+}</string>
            </property>
            <property name="locale">
             <locale language="Spanish" country="Spain"/>
@@ -618,6 +676,18 @@
         <layout class="QVBoxLayout" name="usersLayout">
          <item>
           <widget class="QTabWidget" name="tabWidget">
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QTabWidget{
+	background-color: rgb(248, 255, 255);
+	border-radius: 5px;
+}</string>
+           </property>
            <property name="currentIndex">
             <number>0</number>
            </property>
@@ -643,6 +713,18 @@
              </property>
              <item>
               <widget class="QListWidget" name="listWidget_2">
+               <property name="font">
+                <font>
+                 <family>Quicksand Medium</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QListWidget{
+	background-color: rgb(248, 255, 255);
+	border-radius: 5px;
+}</string>
+               </property>
                <property name="verticalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOn</enum>
                </property>
@@ -684,6 +766,17 @@
              </property>
              <item>
               <widget class="QListWidget" name="listWidget_1">
+               <property name="font">
+                <font>
+                 <family>Quicksand Medium</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QListWidget{
+	background-color: rgb(248, 255, 255)
+}</string>
+               </property>
                <property name="verticalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOn</enum>
                </property>
@@ -739,9 +832,14 @@
              </property>
              <property name="maximumSize">
               <size>
-               <width>60</width>
-               <height>60</height>
+               <width>50</width>
+               <height>50</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel{
+	border-radius:6px;
+}</string>
              </property>
              <property name="text">
               <string/>
@@ -770,6 +868,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>
            </property>
@@ -788,6 +892,18 @@
        </item>
        <item>
         <widget class="QTextEdit" name="textEdit">
+         <property name="font">
+          <font>
+           <family>Quicksand</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QTextEdit{
+	background-color: rgb(248, 255, 255);
+	border-radius: 5px;
+}</string>
+         </property>
          <property name="locale">
           <locale language="Spanish" country="Spain"/>
          </property>
@@ -797,6 +913,28 @@
         <layout class="QVBoxLayout" name="buttonLayout">
          <item>
           <widget class="QPushButton" name="pushButton">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+	background-color:rgb(0,163,204);
+	color:white;
+	border-radius:5px;
+}
+QPushButton:hover{
+  background-color:rgb(0,163,204);
+}</string>
+           </property>
            <property name="locale">
             <locale language="Spanish" country="Spain"/>
            </property>
@@ -807,6 +945,28 @@
          </item>
          <item>
           <widget class="QPushButton" name="clearButton">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Quicksand Medium</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+  background-color:rgb(0,163,204);
+color:white;
+border-radius:5px;
+}
+QPushButton:hover{
+  background-color:rgb(0,163,204);
+}</string>
+           </property>
            <property name="locale">
             <locale language="Spanish" country="Spain"/>
            </property>
