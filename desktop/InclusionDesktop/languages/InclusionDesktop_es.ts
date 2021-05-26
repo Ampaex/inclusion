@@ -63,8 +63,8 @@
     </message>
     <message>
         <location filename="../form.cpp" line="89"/>
-        <source>No ha sido posible cargar los idiomas</source>
-        <translation>No ha sido posible cargar los idiomas</translation>
+        <source>No ha sido posible cargar el idioma</source>
+        <translation>No ha sido posible cargar el idioma</translation>
     </message>
 </context>
 <context>

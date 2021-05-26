@@ -86,7 +86,7 @@ void Form::loadTranslation(QString lang)
     if(!this->trans->load(path))
     {
         QMessageBox alert;
-        alert.setText(tr("No ha sido posible cargar los idiomas"));
+        alert.setText(tr("No ha sido posible cargar el idioma"));
         alert.exec();
     }
     else
@@ -94,4 +94,23 @@ void Form::loadTranslation(QString lang)
         this->app->installTranslator(this->trans);
     }
 
+}
+
+void Form::on_comboBox_currentIndexChanged(int index)
+{
+    switch(index)
+    {
+        case 0:
+            loadTranslation(QString("es"));
+        break;
+
+        case 1:
+            loadTranslation(QString("en"));
+        break;
+
+        case 2:
+            loadTranslation(QString("zh"));
+        break;
+    }
+    ui->retranslateUi(this);
 }

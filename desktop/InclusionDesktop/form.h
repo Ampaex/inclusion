@@ -27,6 +27,8 @@ public:
 private slots:
     void on_loginButton_clicked();
 
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::Form *ui;
     QString username;
