@@ -24,6 +24,11 @@ QLabel* MainWindow::getLabelUsername()
     return ui->label_userName;
 }
 
+Ui::MainWindow* MainWindow::getUi()
+{
+    return ui;
+}
+
 void MainWindow::on_clearButton_clicked()
 {
     ui->textEdit->clear();

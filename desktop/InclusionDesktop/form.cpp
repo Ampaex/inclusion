@@ -62,6 +62,8 @@ void Form::on_loginButton_clicked()
                 mainwindow.getGroupList()->addItem(elem_qs);
             }
 
+            loadTranslation(language);
+            mainwindow.getUi()->retranslateUi(&mainwindow);
             mainwindow.getLabelUsername()->setText(username);
             mainwindow.move(QApplication::desktop()->screen()->rect().center() - mainwindow.rect().center());
             mainwindow.show();
@@ -74,4 +76,22 @@ void Form::on_loginButton_clicked()
             alert.exec();
         }
     }
+}
+
+void Form::loadTranslation(QString lang)
+{
+
+    QString path = this->app->applicationDirPath() + "/InclusionDesktop_" + lang;
+
+    if(!this->trans->load(path))
+    {
+        QMessageBox alert;
+        alert.setText(tr("No ha sido posible cargar los idiomas"));
+        alert.exec();
+    }
+    else
+    {
+        this->app->installTranslator(this->trans);
+    }
+
 }

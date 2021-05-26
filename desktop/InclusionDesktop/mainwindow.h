@@ -20,6 +20,7 @@ public:
     QLabel* getLabelUsername();
     void updateChatBox();
     void updateUsers();
+    Ui::MainWindow* getUi();
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

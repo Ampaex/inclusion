@@ -27,8 +27,9 @@ FORMS += \
     mainwindow.ui
 
 TRANSLATIONS += \
-    InclusionDesktop_es_ES.ts \
-    InclusionDesktop_en_EN.ts
+    languages/InclusionDesktop_es.ts \
+    languages/InclusionDesktop_en.ts \
+    languages/InclusionDesktop_zh.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

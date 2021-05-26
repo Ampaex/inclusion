@@ -19,6 +19,9 @@ class Form : public QWidget
 public:
     explicit Form(QWidget *parent = nullptr);
     void onClick();
+    QTranslator* trans;
+    QApplication* app;
+    void loadTranslation(QString lang);
     ~Form();
 
 private slots:
