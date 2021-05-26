@@ -126,7 +126,7 @@ QLineEdit:focus{
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../media/images/LogoProyecto.png</pixmap>
+    <pixmap>images/LogoProyecto.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
