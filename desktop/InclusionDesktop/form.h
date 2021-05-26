@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include <client.h>
 #include <thread>
+#include <QThread>
 #include <QTranslator>
 
 namespace Ui {

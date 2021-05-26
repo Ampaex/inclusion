@@ -5,6 +5,7 @@
 #include <client.h>
 #include <QTimer>
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,8 +31,11 @@ private slots:
     void updateInterface();
     void on_pushButton_clicked();
 
+    void on_lineEdit_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     QTimer* timer = new QTimer(this);
+    void sendToChatBox();
 };
 #endif // MAINWINDOW_H

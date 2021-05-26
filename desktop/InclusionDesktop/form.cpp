@@ -47,6 +47,9 @@ void Form::on_loginButton_clicked()
         while(!client.responseAvailable);
         client.responseAvailable = false;
 
+        //Wait because in release version does not give enough time to fill group data
+        this->thread()->msleep(50);
+
         if (!client.groups.empty())
         {
             this->hide();

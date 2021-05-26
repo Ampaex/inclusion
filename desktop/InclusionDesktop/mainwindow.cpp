@@ -32,7 +32,7 @@ Ui::MainWindow* MainWindow::getUi()
 
 void MainWindow::on_clearButton_clicked()
 {
-    ui->textEdit->clear();
+    ui->lineEdit->clear();
 }
 
 void MainWindow::on_listWidget_2_itemDoubleClicked(QListWidgetItem *item)
@@ -88,7 +88,17 @@ void MainWindow::updateInterface()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString inputText = ui->textEdit->toPlainText(); //Get text from input box
+    sendToChatBox();
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    sendToChatBox();
+}
+
+void MainWindow::sendToChatBox()
+{
+    QString inputText = ui->lineEdit->text(); //Get text from input box
     string inputText_s = inputText.toStdString();
     on_clearButton_clicked(); //Clear input box
 
@@ -104,7 +114,6 @@ void MainWindow::on_pushButton_clicked()
     client->responseAvailable = false;
 
     updateChatBox();
-
 }
 
 void MainWindow::updateChatBox()
@@ -136,6 +145,13 @@ void MainWindow::updateChatBox()
     else
     {
         ui->listWidget->clear();
+    }
+
+    //If we are in a group then enable text input
+    if(client->group.getTitle()!="")
+    {
+        ui->lineEdit->setReadOnly(false);
+        ui->lineEdit->setPlaceholderText(QString(tr("Escribe aquí...")));
     }
 }
 
