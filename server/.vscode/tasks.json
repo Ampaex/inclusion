@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++ compilar archivo activo",
+			"command": "/bin/g++",
+			"args": [
+				"server.cpp",
+				"message.o",
+				"-o",
+				"server",
+				"-lchilkat-9.5.0",
+				"-I",
+				"/usr/lib/chilkat-9.5.0-x86_64-linux-gcc/include/",
+				"-I",
+				"${fileDirname}/../lib/}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compilador: /bin/g++"
+		}
+	]
+}

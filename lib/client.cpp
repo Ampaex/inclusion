@@ -1,0 +1,435 @@
+// cd ../lib; g++ -c *.cpp; cd ../desktop/; g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0; ./client 127.0.0.1 12345
+// cd ../lib; g++ -c *.cpp; cd ../desktop/; g++ -o client client.cpp message.o user.o group.o -lchilkat-9.5.0; ./client 127.0.0.1 12345
+
+// Compile: cd ../lib; g++ -c *.cpp; cd ../server
+// Compile: g++ -o client client.cpp ../lib/message.o ../lib/user.o ../lib/group.o -lchilkat-9.5.0
+// Input: ./client 127.0.0.1 12345 (IP + Port)
+// Terminate: exit
+
+#include "client.h"
+
+/////////////////////
+//      CLIENT     //
+/////////////////////
+
+// Setters
+
+void Client::setGroup( Group group )
+{
+    // Iterate trough existing groups
+    for (int i = 0; i < this->groups.size(); i++) {
+
+        // If the current group exists, do not add it
+        if (this->groups[i] == group.getTitle()) {
+            this->group = group;
+        }
+    }
+}
+
+void Client::setUser( User newUser )
+{
+    this->user.setName(newUser.getName());
+    this->user.setLanguage(newUser.getLanguage());
+}
+
+void Client::setLanguage( string &lang )
+{
+    this->user.setLanguage(lang);
+}
+
+// Methods
+
+bool Client::addGroup( string title ) 
+{
+    bool add = true;
+
+    // Iterate trough existing groups
+    for (int i = 0; i < this->groups.size(); i++) {
+
+        // If the current group exists, do not add it
+        if (this->groups[i] == title) {
+            add = false;
+            break;
+        }
+    }
+
+    // Add the group if it does not exist yet
+    if (add) this->groups.push_back(title);
+
+    // Returns true if added, false if not
+    return add;
+}
+
+bool Client::removeGroup( Group group ) 
+{
+    bool remove = false;
+
+    // Iterate trough existing users
+    for (int i = 0; i < this->groups.size(); i++) {
+
+        // If the current user has the same name as 
+        // the user to remove, delete it
+        if (this->groups[i] == group.getTitle()) {
+            remove = true;
+            this->groups.erase(this->groups.begin() + i);
+            break;
+        }
+    }
+
+    // Returns true if removed, false if not
+    return remove;
+}
+
+// Socket: Connection
+
+void Client::startConnection(char *ip, int port)
+{     
+    // Socket and connection tools 
+    struct hostent* host = gethostbyname(ip); 
+    sockaddr_in clientAddr;   
+    bzero((char*)& clientAddr, sizeof(clientAddr)); 
+    clientAddr.sin_family = AF_INET; 
+    clientAddr.sin_addr.s_addr = inet_addr(inet_ntoa(*(struct in_addr*)*host->h_addr_list));
+    clientAddr.sin_port = htons(port);
+    this->clientSd = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Try to connect
+    int status = connect(this->clientSd, (sockaddr*) &clientAddr, sizeof(clientAddr));
+    if(status < 0)  
+    { 
+        cout << "Error connecting to socket!" << endl; exit(0); 
+    }
+    else            
+    { 
+        cout << "Connected to the server!" << endl;
+        std::thread listenerThread(&Client::listenConnection,this);
+        listenerThread.detach();
+    }
+}
+
+void Client::listenConnection() {
+
+    // Set socket variables
+    char message[1500];
+    cout << "Starting to listen!" << endl ;
+    this->exitListen = false;
+
+    // Send and receive data
+    while(1)
+    {
+        if(data != "")
+        {
+            cout << "New data: " << data << endl;
+
+            time_t currentTime;
+            struct tm *localTime;
+            time( &currentTime );
+            localTime= localtime(&currentTime);
+            lastListen += to_string(localTime->tm_hour) + ":";
+            lastListen += to_string(localTime->tm_min) + ":";
+            lastListen += to_string(localTime->tm_sec) ;
+
+            //////////////////////
+            //   Send message   //
+            //////////////////////
+
+            memset(&message, 0, sizeof(message));
+            strcpy(message, data.c_str());
+            send(this->clientSd, (char*)&message, strlen(message), 0);
+
+             // End connection: client
+            if(data == "exit")
+            {
+                break;
+            }
+            // Wait for response
+            else
+            {
+                cout << "Awaiting server response..." << endl;
+            }
+
+            data = ""; //Empty the data
+
+            /////////////////////
+            // Receive message //
+            /////////////////////
+
+            memset(&message, 0, sizeof(message));
+            recv(this->clientSd, (char*)&message, sizeof(message), 0);
+
+            // End connection: server
+            if(!strcmp(message, "exit"))
+            {
+                cout << "Server: Session quit" << endl;
+                break;
+            }
+            // Print message
+            else
+            {
+                cout << "Server: " << message << endl;
+                string msg = message;
+                this->receiveAnswer(msg);
+                responseAvailable = true;
+            }
+
+            cout << "---" << endl;
+            cout << this->user << endl;
+            cout << this->group << endl;
+            cout << "---" << endl;
+
+        }
+    }
+    this->exitListen = true;
+    this->endConnection();
+}
+
+void Client::receiveAnswer( string &msg )
+{
+    bool valid = false;
+    string title = "";
+    string className = "";
+    string delimiter = ":";
+
+    // Fetch class
+    className = msg.substr(0, msg.find(delimiter));
+    msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+    // Request made: New user
+    while (className == "Group" && msg != "")
+    {
+        // Fetch group
+        delimiter = "/";
+        title = msg.substr(0, msg.find(delimiter));
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+        valid = title != "" ? true : false;
+
+        // Add group to the list
+        if (valid)
+        {
+            this->addGroup(title);
+        }
+        
+        // Fetch class
+        delimiter = ":";
+        className = msg.substr(0, msg.find(delimiter));
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+
+        // List of groups, no other object is allowed
+        if (className == "Group") {
+            valid = false;
+        }
+    }
+
+    // Request made: Add user to group/Send new message
+     if (className == "User" && valid)
+    {
+        string userName = "";
+        string userLanguage = "";
+        string messageText = "";
+        string messageLanguage = "";
+        vector<User> groupUsers;
+        map<string, string> translatedMessages;
+        User messageUser;
+
+        // Set the new group and add it to the list if needed
+        Group newGroup = Group(title);
+        this->addGroup(title);
+
+        // If the object is an user, continue
+        while (className == "User" && msg != "")
+        {
+            // Fetch user
+            delimiter = ",";
+            userName = msg.substr(0, msg.find(delimiter));
+            msg.erase(0, msg.find(delimiter) + delimiter.length());
+            delimiter = "/";
+            userLanguage = msg.substr(0, msg.find(delimiter));
+            msg.erase(0, msg.find(delimiter) + delimiter.length());
+            valid = userName != "" && userLanguage != "" ? true : false;
+
+            // Add user to the list
+            if (valid)
+            {
+                groupUsers.push_back( User(userName, userLanguage) );
+            }
+            
+            // Fetch class
+            delimiter = ":";
+            className = msg.substr(0, msg.find(delimiter));
+            msg.erase(0, msg.find(delimiter) + delimiter.length());
+        }
+
+        // Add user list to the group
+        newGroup.setUsers(groupUsers);
+
+        // If the object is an user or message, continue
+        while (className == "Message" || (className == "User" && msg != ""))
+        {
+            if (className == "Message" && messageLanguage == "" && messageText == "")
+            {
+                delimiter = ",";
+                messageLanguage = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                delimiter = "/";
+                messageText = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                valid = messageLanguage != "" && messageText != "" ? true : false;
+            }
+            else if (className == "Message")
+            {
+                delimiter = ",";
+                string language = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                delimiter = "/";
+                string text = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                valid = language != "" && text != "" ? true : false; 
+
+                if (valid)
+                {
+                    // Add message to translated messages
+                    translatedMessages[language] = text;                    
+                }
+            }
+            else if (className == "User")
+            {
+                delimiter = ",";
+                userName = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                delimiter = "/";
+                userLanguage = msg.substr(0, msg.find(delimiter));
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+                valid = userName != "" && userLanguage != "" ? true : false;
+
+                if (valid)
+                {
+                    // Add messages to group
+                    Message message = Message(messageText, messageLanguage, User(userName, userLanguage), false);
+
+                    // Loop through translated messages
+                    for(map<string, string>::iterator it = translatedMessages.begin(); it != translatedMessages.end(); ++it) {
+                        message.setMessage(it->second, it->first);
+                    }
+
+                    // Set values into group
+                    newGroup.addMessage(message);
+                }
+
+                // Reset values
+                messageLanguage = "";
+                messageText = "";
+                userName = "";
+                userLanguage = "";
+            }
+            
+            // Fetch class
+            delimiter = ":";
+            className = msg.substr(0, msg.find(delimiter));
+            if (className != "Message" && className != "User" && msg.length() > 0) {
+                className = "Message";
+                delimiter = "/";
+            }
+            else {
+                msg.erase(0, msg.find(delimiter) + delimiter.length());
+            }
+        }
+
+        if (valid)
+        {
+            this->group = newGroup;
+        }
+    }
+}
+
+void Client::checkRequest( string &data )//checkRequest
+{
+    stringstream buffer;
+
+    // Qt: must set the user before calling this method
+
+    //call procressclasstype
+    // Set the utser to send
+    if (data == "user")
+    {
+        //this->user.seName("Example"); // TODO: Add via Qt
+        //this->user.setLanguage("en"); // TODO: Add via Qt
+        buffer << user;
+        data = buffer.str();
+    }
+
+    // Qt: may need to change parameters in order to pass the group name
+
+    // Set user in group
+    else if (data == "group")
+    {
+        // TODO: Change group title by the one indicated by Qt
+        if (this->user.getName() != "") // TODO: Change
+        {
+            buffer << "Group:" << "Group 1" << "/" << user; // TODO: Change
+            data = buffer.str();
+        }
+        else 
+        {
+            data = "Error: Empty user or group";
+        }
+    } 
+
+    // Qt: may need to change parameters in order to pass the group name
+
+    // Set the message to send
+    else if (data == "message")
+    {
+        // TODO: Change message by the one indicated by Qt
+        if (user.getName() != "" && group.getTitle() != "")
+        {
+            Message message = Message("Ejemplo", "es", user, false); // TODO: Change
+            buffer << "Group:" << group.getTitle() << "/" << message; 
+            data = buffer.str();
+        }
+        else 
+        {
+            data = "Error: Empty user or group";
+        }
+    }
+    // Quit request
+    else if (data == "exit")
+    {
+        // Exit
+    }
+    // No valid data
+    else 
+    {
+        data = "Error: Unknown";
+    }
+}
+
+void Client::endConnection()
+{     
+    // Close the socket descriptors after we're all done
+    close(this->clientSd);
+}
+
+string Client::processClassType( string &msg )
+{
+    // Will return none if no class applies
+    string classType = "None";
+    string delimiter = ":";
+
+    // Fetch class to build
+    classType = msg.substr(0, msg.find(delimiter));
+
+    // If class fetched is non applicable, change it to "None"
+    if (classType != "Group" && classType != "Message" && classType != "User")
+    {
+        classType = "None";
+    }
+
+    // Erase extracted token (delimiter included)
+    else
+    {
+        msg.erase(0, msg.find(delimiter) + delimiter.length());
+    }
+
+    // Return type
+    return classType;
+}

@@ -9,22 +9,34 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    alertwindow.cpp \
     form.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    $$OUT_PWD/../../lib/*.cpp
 
 HEADERS += \
+    alertwindow.h \
     form.h \
-    mainwindow.h
+    mainwindow.h \
+    $$OUT_PWD/../../lib/*.h
 
 FORMS += \
+    alertwindow.ui \
     form.ui \
     mainwindow.ui
 
 TRANSLATIONS += \
-    InclusionDesktop_es_ES.ts
+    languages/InclusionDesktop_es.ts \
+    languages/InclusionDesktop_en.ts \
+    languages/InclusionDesktop_zh.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+unix|win32: LIBS += -lchilkat-9.5.0
+INCLUDEPATH += /usr/lib/chilkat-9.5.0-x86_64-linux-gcc/include
+INCLUDEPATH += $$OUT_PWD/../../lib
+

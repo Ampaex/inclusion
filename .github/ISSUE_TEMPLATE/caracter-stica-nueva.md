@@ -7,4 +7,8 @@ assignees: ''
 
 ---
 
-# Descripción
+## Descripción
+** Describe aquí en qué consiste la característica **
+
+## Objetivos
+- [ ] *Puedes enumerar aquí si fueran necesarios varios pasos para completarlo*

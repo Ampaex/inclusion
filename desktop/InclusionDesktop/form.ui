@@ -6,12 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>250</height>
+    <width>460</width>
+    <height>220</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>460</width>
+    <height>220</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>460</width>
+    <height>220</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>User login</string>
+   <string>Registro</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -19,74 +31,57 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#Form{
-  background:rgb(231, 232, 255);
+	background-color : rgb(231, 232, 255);
 }</string>
   </property>
   <widget class="QPushButton" name="loginButton">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>200</y>
-     <width>91</width>
-     <height>31</height>
+     <x>350</x>
+     <y>150</y>
+     <width>101</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Quicksand Medium</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-  background-color:rgb(0,163,204);
-color:white;
-border-radius:2px;
+  	background-color:rgb(0,163,204);
+	color:white;
+	border-radius:5px;
 }
 QPushButton:hover{
-  background-color:rgb(0,163,204,70%);
+  	background-color:rgb(0,123,164);
 }</string>
    </property>
-   <property name="text">
-    <string>Login</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="registerButton">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>200</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton{
-  background-color:rgb(0,163,204);
-color:white;
-border-radius:2px;
-}
-QPushButton:hover{
-  background-color:rgb(0,163,204,70%);
-}</string>
+   <property name="locale">
+    <locale language="Spanish" country="Spain"/>
    </property>
    <property name="text">
-    <string>Registrar</string>
+    <string>Entrar</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="userName">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>110</y>
-     <width>241</width>
-     <height>31</height>
+     <x>120</x>
+     <y>150</y>
+     <width>221</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Arial</family>
-     <pointsize>10</pointsize>
+     <family>Quicksand</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="styleSheet">
@@ -96,46 +91,23 @@ QPushButton:hover{
 }
 QLineEdit:focus{
   border:1px solid rgb(78, 125, 255);
-  border-radius:2px;
+  border-radius:5px;
 }</string>
+   </property>
+   <property name="locale">
+    <locale language="Spanish" country="Spain"/>
    </property>
    <property name="text">
     <string/>
    </property>
-   <property name="placeholderText">
-    <string>Enter your Name</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="userPassword">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>150</y>
-     <width>241</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QLineEdit{
-  border:1px solid rgb(219, 211, 222);
-  border-radius:2px;
-}
-QLineEdit:focus{
-  border:1px solid rgb(78, 125, 255);
-  border-radius:2px;
-}</string>
+   <property name="maxLength">
+    <number>15</number>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
+    <enum>QLineEdit::Normal</enum>
    </property>
    <property name="placeholderText">
-    <string>Enter your Password</string>
+    <string>Escriba su apodo</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -143,25 +115,75 @@ QLineEdit:focus{
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>371</width>
-     <height>91</height>
+     <width>461</width>
+     <height>121</height>
     </rect>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhNone</set>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../media/images/LogoProyecto.png</pixmap>
+    <pixmap>images/LogoProyecto.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Quicksand Medium</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#comboBox{
+	color: rgb(0, 70, 65);
+}</string>
+   </property>
+   <property name="locale">
+    <locale language="Spanish" country="Spain"/>
+   </property>
+   <property name="placeholderText">
+    <string>Idioma</string>
+   </property>
+   <property name="duplicatesEnabled">
+    <bool>false</bool>
+   </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+   <item>
+    <property name="text">
+     <string>Español</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Inglés</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Chino</string>
+    </property>
+   </item>
+  </widget>
   <zorder>label</zorder>
-  <zorder>loginButton</zorder>
-  <zorder>registerButton</zorder>
   <zorder>userName</zorder>
-  <zorder>userPassword</zorder>
+  <zorder>loginButton</zorder>
+  <zorder>comboBox</zorder>
  </widget>
  <resources/>
  <connections/>
