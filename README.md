@@ -1,14 +1,30 @@
 ![imagen_proyecto](media/images/LogoProyecto.png)
+
 ***
-Repositorio github para la asignatura tecnologías multimedia e interacción.
-Documentos servidor y aplicación de escritorio Qt5.
+[English]\
+_Project for subject multimedia technologies and interaction._
 
-La aplicación inclusion pretende ser una aplicación de chat de escritorio la cual sirva como intermediaria en conversaciones en la que intervengan varios idiomas de forma que el usuario final solamente vea los mensajes en su idioma nativo.
+The inclusion app pretends to be a chat application for acting as intermediary in conversations in which multiple languages are involved, our goal is providing to the user an interface completely in his native language using google translate API for translating other's user messages.
 
-## Diagrama de flujo entre Servidor y Cliente (Sockets)
+***
+[Español]\
+_Proyecto para la asignatura tecnologías multimedia e interacción._
+
+La aplicación inclusion pretende ser una aplicación de chat de escritorio la cual sirva como intermediaria en conversaciones en la que intervengan varios idiomas, de forma que el usuario final solamente vea los mensajes en su idioma nativo traduciendo los mensajes entre usuarios con la API de Google translate.
+
+# Capuras
+
+## Registro en la aplicación [Inglés/Chino]
 <p align="center">
-  <img width="671" height="672" src="Documentacion/Diagrama%20de%20flujo%20Cliente-Servidor.png">
+  <img width="918" height="257" src="media/Captura_intro.png">
 </p>
+
+
+## Aplicación de chat [Inglés/Chino]
+<p align="center">
+  <img width="1000" height="399" src="media/Captura_app.png">
+</p>
+
 
 _Fecha de entrega [14 de mayo de 2021]_
 
