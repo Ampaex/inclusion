@@ -36,4 +36,4 @@ La aplicación inclusion pretende ser una aplicación ultraligera de chat de esc
 * La aplicación en Qt tiene la posibilidad de cargar traducciones nuevas para la interfaz y añadir nuevos idiomas fácilmente en la programación.
 * Tanto el servidor como el cliente no ocupan más de 1.2MB.
 
-_Autores: Liu Yfei, Jhohan Herrera, Ernesto Aranda, Antonio Vázquez._
+_Autores: Liu Yifei, Jhohan Herrera, Ernesto Aranda, Antonio Vázquez._
