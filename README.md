@@ -16,13 +16,13 @@ La aplicación inclusion pretende ser una aplicación ultraligera de chat de esc
 
 ## Registro en la aplicación [Inglés/Chino]
 <p align="center">
-  <img width="918" height="257" src="media/Captura_intro.png">
+  <img src="media/Captura_intro.png">
 </p>
 
 
 ## Aplicación de chat [Inglés/Chino]
 <p align="center">
-  <img width="1000" height="399" src="media/Captura_app.png">
+  <img src="media/Captura_app.png">
 </p>
 
 # Tecnologías
